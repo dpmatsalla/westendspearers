@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let dayOfWeek = currentDate.getDay(); // Initialize dayOfWeek
 
-  let calendarHTML = '<table>';
+  let calendarHTML = '<table border="1">';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
 
   for (let i = 0; i < dayOfWeek; i++) {
