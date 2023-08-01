@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Sample data - Replace this with your own event data
   const events = [
-    { date: '2023-08-15', title: 'Event 1' },
-    { date: '2023-08-22', title: 'Event 2' },
-    { date: '2023-08-28', title: 'Event 3' },
+    { date: '2023-07-15', title: 'Event 1' },
+    { date: '2023-07-22', title: 'Event 2' },
+    { date: '2023-07-28', title: 'Event 3' },
   ];
 
   const currentDate = new Date();
@@ -50,4 +50,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendarContainer.innerHTML = calendarHTML;
 });
-
