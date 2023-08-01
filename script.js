@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const currentDate = new Date();
   let firstDayToShow = new Date();
   let lastDayToShow = new Date();
-  firstDayToShow.setDate(-currentDate.getDay());
-  if (currentDate.getDay() == 0) { firstDayToShow.setDate(-7); }
+  firstDayToShow.setDate(currentDate.getDate() - currentDate.getDay());
+  if (currentDate.getDay() == 0) { firstDayToShow.setDate(firstDayToShow.getDate() - 7); }
   lastDayToShow.setDate(firstDayToShow.getDate() + 41);
   let dayOfWeek = firstDayToShow.getDay();  // Initialize dayOfWeek
 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
   while (day <= lastDayToShow) {
     const formattedDate = formatDate(day);
 
-    if (dayOfWeek === 0) {
+    if (dayOfWeek == 0) {
       calendarHTML += '<tr>';
     }
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
       calendarHTML += '</tr>';
     }
 
-    day.setDate(1);
+    day.setDate(day.getDate() + 1);
     dayOfWeek = (dayOfWeek + 1) % 7; // Update dayOfWeek for the next day
   }
 
@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function formatDate(date) {
-  const day = date.getDate().toString().padStart(2, '0');
+  const year = date.getFullYear().toString();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const year = date.getFullYear().toString().slice(-2);
+  const day = date.getDate().toString().padStart(2, '0');
 
-  return `${day}/${month}/${year}`;
+  return `${year}-${month}-${day}`;
 }
