@@ -34,6 +34,21 @@ td {
     padding: 10px;
     text-align: center;
 }
+.calendar {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid blue;
+  background-color: beige;
+}
+.calendar th, .calendar td {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 8px;
+}
+.calendar .today {
+  font-weight: bold;
+  text-decoration: underline;
+}
 .content {
   background-color: darkgreen;
   padding: 20px;
