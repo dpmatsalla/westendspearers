@@ -46,6 +46,10 @@ td {
   text-align: center;
   padding: 8px;
 }
+.calendar thead {
+  background-color: #333;
+  color: #fff;
+}
 .calendar .today {
   font-weight: bold;
   text-decoration: underline;
