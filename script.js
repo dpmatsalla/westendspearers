@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const today = currentDate.getDate();
   const lastDayToShow = today + 40;
 
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-  let dayOfWeek = firstDayOfMonth.getDay(); // Initialize dayOfWeek based on the starting day of the month
+  let dayOfWeek = currentDate.getDay(); // Initialize dayOfWeek
 
   let calendarHTML = '<table>';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
