@@ -9,33 +9,28 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-  const today = currentDate.getDate();
-  const lastDayToShow = today + 40;
+  const firstDayToShow = currentDate - currentDate.getDay();
+  if (currentDate.getDay() == 0) { firstDayToShow -= 7; }
+  const lastDayToShow = firstDayToShow + 41;
+  let dayOfWeek = firstDayToShow.getDay(); // Initialize dayOfWeek
 
-  let dayOfWeek = currentDate.getDay(); // Initialize dayOfWeek
-
-  let calendarHTML = '<table border="1">';
+  let calendarHTML = '<table>';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
 
-  for (let i = 0; i < dayOfWeek; i++) {
-    calendarHTML += '<th></th>';
-  }
-  
-  let day = today;
+  let day = firstDayToShow;
 
   while (day <= lastDayToShow) {
-    const dateToDisplay = new Date(currentYear, currentMonth, day);
+    const formattedDate = formatDate(day);
 
     if (dayOfWeek === 0) {
       calendarHTML += '<tr>';
     }
 
-    const formattedDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
     const event = events.find((event) => event.date === formattedDate);
-    const cellContent = event ? `<span class="event">${event.title}</span><br>${day}` : day;
-
+    let cellContent = formattedDate;
+    if (event) {
+      cellContent += `<br><span class="event">${event.title}</span>`;
+    }
     calendarHTML += `<td>${cellContent}</td>`;
 
     if (dayOfWeek === 6) {
@@ -57,3 +52,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendarContainer.innerHTML = calendarHTML;
 });
+
+function formatDate(date) {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear().toString().slice(-2);
+
+  return `${day}/${month}/${year}`;
+}
