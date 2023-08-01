@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
   let calendarHTML = '<table>';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
 
+  for (let i = 0; i < dayOfWeek; i++) {
+    calendarHTML += '<th></th>';
+  }
+  
   let day = today;
 
   while (day <= lastDayToShow) {
