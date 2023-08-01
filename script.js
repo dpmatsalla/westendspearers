@@ -15,9 +15,9 @@ function generateCalendar() {
 
   // Dummy list of events (Replace this with your actual events data)
   const events = [
-    { date: "2023-07-30", event: "Event 1" },
-    { date: "2023-08-03", event: "Event 2" },
-    { date: "2023-08-08", event: "Event 3" },
+    { date: "2023-08-04", event: "Event 1" },
+    { date: "2023-08-13", event: "Event 2" },
+    { date: "2023-08-18", event: "Event 3" },
     // Add more events here...
   ];
 
