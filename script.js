@@ -1,64 +1,58 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const calendarContainer = document.getElementById('calendar');
+// Function to get the last Sunday before today
+function getLastSunday() {
+  const today = new Date();
+  const day = today.getDay();
+  const lastSunday = new Date(today);
+  lastSunday.setDate(today.getDate() - day);
+  return lastSunday;
+}
 
-  // Sample data - Replace this with your own event data
+// Function to generate calendar cells and events
+function generateCalendar() {
+  const tableBody = document.querySelector("#calendar tbody");
+  const lastSunday = getLastSunday();
+  let currentDate = new Date(lastSunday);
+
+  // Dummy list of events (Replace this with your actual events data)
   const events = [
-    { date: '2023-08-15', title: 'Event 1' },
-    { date: '2023-08-22', title: 'Event 2' },
-    { date: '2023-08-28', title: 'Event 3' },
+    { date: "2023-07-30", event: "Event 1" },
+    { date: "2023-08-03", event: "Event 2" },
+    { date: "2023-08-08", event: "Event 3" },
+    // Add more events here...
   ];
 
-  const currentDate = new Date();
-  let firstDayToShow = new Date();
-  let lastDayToShow = new Date();
-  firstDayToShow.setDate(currentDate.getDate() - currentDate.getDay());
-  if (currentDate.getDay() == 0) { firstDayToShow.setDate(firstDayToShow.getDate() - 7); }
-  lastDayToShow.setDate(firstDayToShow.getDate() + 41);
-  let dayOfWeek = firstDayToShow.getDay();  // Initialize dayOfWeek
+  // Get today's date in "YYYY-MM-DD" format
+  const todayDate = new Date().toISOString().split("T")[0];
 
-  let calendarHTML = '<table>';
-  calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
+  // Generate 6 weeks (42 cells) of calendar
+  for (let week = 0; week < 6; week++) {
+    const row = document.createElement("tr");
 
-  let day = firstDayToShow;
+    for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+      const cell = document.createElement("td");
+      const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
+      cell.textContent = cellDate;
 
-  while (day <= lastDayToShow) {
-    const formattedDate = formatDate(day);
+      // Check if there are any events on this date
+      const eventInfo = events.find(event => event.date === cellDate);
+      if (eventInfo) {
+        const eventElement = document.createElement("div");
+        eventElement.textContent = eventInfo.event;
+        cell.appendChild(eventElement);
+      }
 
-    if (dayOfWeek == 0) {
-      calendarHTML += '<tr>';
+      // Add today's date style
+      if (cellDate === todayDate) {
+        cell.classList.add("today");
+      }
+
+      row.appendChild(cell);
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
     }
 
-    const event = events.find((event) => event.date === formattedDate);
-    let cellContent = formattedDate;
-    if (event) {
-      cellContent += `<br><span class="event">${event.title}</span>`;
-    }
-    calendarHTML += `<td>${cellContent}</td>`;
-
-    if (dayOfWeek === 6) {
-      calendarHTML += '</tr>';
-    }
-
-    day.setDate(day.getDate() + 1);
-    dayOfWeek = (dayOfWeek + 1) % 7; // Update dayOfWeek for the next day
+    tableBody.appendChild(row);
   }
-
-  // Add empty cells to complete the last week if needed
-  while (dayOfWeek !== 0) {
-    calendarHTML += '<td></td>';
-    dayOfWeek = (dayOfWeek + 1) % 7;
-  }
-
-  calendarHTML += '</tr>';
-  calendarHTML += '</table>';
-
-  calendarContainer.innerHTML = calendarHTML;
-});
-
-function formatDate(date) {
-  const year = date.getFullYear().toString();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
 }
+
+// Call the function to generate the calendar
+generateCalendar();
