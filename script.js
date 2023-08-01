@@ -11,41 +11,43 @@ document.addEventListener('DOMContentLoaded', function () {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
-
-  const daysInMonth = lastDayOfMonth.getDate();
-  const startingDay = firstDayOfMonth.getDay();
+  const today = currentDate.getDate();
+  const lastDayToShow = today + 40;
 
   let calendarHTML = '<table>';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
-  let day = 1;
 
-  // Create the cells for the calendar
-  for (let i = 0; i < 6; i++) {
-    calendarHTML += '<tr>';
+  let day = today;
+  while (day <= lastDayToShow) {
+    const dateToDisplay = new Date(currentYear, currentMonth, day);
+    const dayOfWeek = dateToDisplay.getDay();
 
-    for (let j = 0; j < 7; j++) {
-      if (i === 0 && j < startingDay) {
-        calendarHTML += '<td></td>';
-      } else if (day > daysInMonth) {
-        break;
-      } else {
-        const formattedDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        const event = events.find((event) => event.date === formattedDate);
-        const cellContent = event ? `<span class="event">${event.title}</span><br>${day}` : day;
-        calendarHTML += `<td>${cellContent}</td>`;
-        day++;
-      }
+    if (dayOfWeek === 0) {
+      calendarHTML += '<tr>';
     }
 
-    calendarHTML += '</tr>';
+    const formattedDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const event = events.find((event) => event.date === formattedDate);
+    const cellContent = event ? `<span class="event">${event.title}</span><br>${day}` : day;
 
-    if (day > daysInMonth) {
-      break;
+    calendarHTML += `<td>${cellContent}</td>`;
+
+    if (dayOfWeek === 6) {
+      calendarHTML += '</tr>';
     }
+
+    day++;
   }
 
+  // Add empty cells to complete the last week if needed
+  while (dayOfWeek !== 6) {
+    calendarHTML += '<td></td>';
+    dayOfWeek = (dayOfWeek + 1) % 7;
+  }
+
+  calendarHTML += '</tr>';
   calendarHTML += '</table>';
+
   calendarContainer.innerHTML = calendarHTML;
 });
+
