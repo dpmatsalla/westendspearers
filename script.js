@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   const currentDate = new Date();
-  const firstDayToShow = currentDate - currentDate.getDay();
+  const firstDayToShow = new Date(currentDate - currentDate.getDay());
   if (currentDate.getDay() == 0) { firstDayToShow -= 7; }
   const lastDayToShow = firstDayToShow + 41;
-  let dayOfWeek = 0;  // Initialize dayOfWeek
+  let dayOfWeek = firstDayToShow.getDay();  // Initialize dayOfWeek
 
   let calendarHTML = '<table>';
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
