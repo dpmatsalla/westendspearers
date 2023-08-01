@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   const currentDate = new Date();
-  const firstDayToShow = new Date(currentDate - currentDate.getDay());
-  if (currentDate.getDay() == 0) { firstDayToShow -= 7; }
-  const lastDayToShow = firstDayToShow + 41;
+  let firstDayToShow = new Date();
+  let lastDayToShow = new Date();
+  firstDayToShow.setDate(-currentDate.getDay());
+  if (currentDate.getDay() == 0) { firstDayToShow.setDate(-7); }
+  lastDayToShow.setDate(firstDayToShow.getDate() + 41);
   let dayOfWeek = firstDayToShow.getDay();  // Initialize dayOfWeek
 
   let calendarHTML = '<table>';
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
       calendarHTML += '</tr>';
     }
 
-    day++;
+    day.setDate(1);
     dayOfWeek = (dayOfWeek + 1) % 7; // Update dayOfWeek for the next day
   }
 
