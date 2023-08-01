@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Sample data - Replace this with your own event data
   const events = [
-    { date: '2023-08-15', title: 'Event 1' },
-    { date: '2023-08-22', title: 'Event 2' },
-    { date: '2023-08-28', title: 'Event 3' },
+    { date: '2023-07-15', title: 'Event 1' },
+    { date: '2023-07-22', title: 'Event 2' },
+    { date: '2023-07-28', title: 'Event 3' },
   ];
 
   const currentDate = new Date();
@@ -18,9 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
   calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>';
 
   let day = today;
+  let dayOfWeek = currentDate.getDay(); // Initialize dayOfWeek
+
   while (day <= lastDayToShow) {
     const dateToDisplay = new Date(currentYear, currentMonth, day);
-    const dayOfWeek = dateToDisplay.getDay();
 
     if (dayOfWeek === 0) {
       calendarHTML += '<tr>';
@@ -37,10 +38,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     day++;
+    dayOfWeek = (dayOfWeek + 1) % 7; // Update dayOfWeek for the next day
   }
 
   // Add empty cells to complete the last week if needed
-  while (dayOfWeek !== 6) {
+  while (dayOfWeek !== 0) {
     calendarHTML += '<td></td>';
     dayOfWeek = (dayOfWeek + 1) % 7;
   }
