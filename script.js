@@ -7,13 +7,15 @@ function getLastSunday() {
   return lastSunday;
 }
 
-// Function to generate calendar cells and events
+
+
+// Generate calendar and events
 function generateCalendar() {
   const tableBody = document.querySelector("#calendar tbody");
   const lastSunday = getLastSunday();
   let currentDate = new Date(lastSunday);
 
-  // Dummy list of events (Replace this with your actual events data)
+  // Dummy list of events
   const events = [
     { date: "2023-08-04", event: "Event 1" },
     { date: "2023-08-13", event: "Event 2" },
@@ -21,10 +23,10 @@ function generateCalendar() {
     // Add more events here...
   ];
 
-  // Get today's date in "YYYY-MM-DD" format
+  // Get today's date in "YYYY-MM-DD"
   const todayDate = new Date().toISOString().split("T")[0];
 
-  // Generate 6 weeks (42 cells) of calendar
+  // Generate 6 weeks of calendar
   for (let week = 0; week < 6; week++) {
     const row = document.createElement("tr");
 
@@ -33,7 +35,7 @@ function generateCalendar() {
       const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
       cell.textContent = cellDate;
 
-      // Check if there are any events on this date
+      // Check if any events on this date
       const eventInfo = events.find(event => event.date === cellDate);
       if (eventInfo) {
         const eventElement = document.createElement("div");
@@ -54,5 +56,5 @@ function generateCalendar() {
   }
 }
 
-// Call the function to generate the calendar
+// Call function to generate the calendar
 generateCalendar();
