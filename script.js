@@ -60,7 +60,7 @@ function generateCalendar() {
             cell.textContent = cellDate;
     
             // Update tides on this date
-            var matchingEvents = tides.filter(event => tides.date === cellDate);
+            var matchingEvents = tides.filter(event => event.date === cellDate);
             if (matchingEvents.length > 0) {
                 const eventsContainer = document.createElement("div");
                 matchingEvents.forEach(eventInfo => {
