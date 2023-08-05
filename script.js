@@ -4,13 +4,15 @@ function groupTidesByDate() {
     tide_list.forEach(function(tide) {
         var dateStr = tide.time_local.split('T')[0];
         var timeStr = tide.time_local.split('T')[1].substr(0,5);
+        if (tide.tide == 'HIGH') { tideStr = "&#8593;"; }
+        else { tideStr = "&#8595;"; }
         //if (!tidesByDate[dateStr]) {
         //    tidesByDate[dateStr] = { 'types': [], 'times': [], 'heights': [] };
         //}
         //tidesByDate[dateStr].types.push(tide.tide);
         //tidesByDate[dateStr].times.push(timeStr);
         //tidesByDate[dateStr].heights.push(tide.height);
-        tidesByDate.push({ date: dateStr, event: timeStr+": "+tide.tide+" "+tide.height });
+        tidesByDate.push({ date: dateStr, event: timeStr+": "+tideStr+" "+tide.height+"m" });
     });
     return tidesByDate;
 }
@@ -39,9 +41,9 @@ function generateCalendar() {
     
     // List of events
     const events = [
-        { date: "2023-08-04", event: "Event 1" },
-        { date: "2023-08-13", event: "Event 2" },
-        { date: "2023-08-18", event: "Event 3" },
+        { date: "2023-08-16", event: "EKKA" },
+        { date: "2023-11-10", event: "AGM" },
+        { date: "2023-11-11", event: "AGM" },
         { date: "2023-08-18", event: "Event 4" },
         { date: "2023-08-19", event: tide_list[0].time_local },
         // Add more events here...
