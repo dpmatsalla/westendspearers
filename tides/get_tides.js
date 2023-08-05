@@ -1,0 +1,59 @@
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+
+tide_info_list = []
+# Add the User-Agent header to the request
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+}
+
+url = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-08-2023&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
+# Download the webpage content
+response = requests.get(url, headers=headers)
+if response.status_code != 200:
+    print("Failed to download the webpage.")
+    exit()
+else:
+    print(response.status_code)
+# Parse the HTML content using BeautifulSoup
+soup = BeautifulSoup(response.content, "html.parser")
+elements = soup.find_all("td")  # Find all <td>
+for i in range(0, len(elements), 2):
+    if len(elements[i]["class"]) > 1:
+        tide_type = 1 if elements[i]["class"][1] == "high-tide" else 0
+        data_time_local = elements[i]["data-time-local"]
+        #data_time_local = datetime.fromisoformat(data_time_local_str.replace('T', ' ').split('+')[0])
+        height = float(elements[i + 1].text[:-2])
+    tide_info = {
+        "tide": tide_type,
+        "time_local": data_time_local,
+        "height": height
+    }
+    tide_info_list.append(tide_info)
+
+url = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-01-2024&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
+# Download the webpage content
+response = requests.get(url, headers=headers)
+if response.status_code != 200:
+    print("Failed to download the webpage.")
+    exit()
+else:
+    print(response.status_code)
+# Parse the HTML content using BeautifulSoup
+soup = BeautifulSoup(response.content, "html.parser")
+elements = soup.find_all("td")  # Find all <td>
+for i in range(0, len(elements), 2):
+    if len(elements[i]["class"]) > 1:
+        tide_type = 1 if elements[i]["class"][1] == "high-tide" else 0
+        data_time_local = elements[i]["data-time-local"]
+        #data_time_local = datetime.fromisoformat(data_time_local_str.replace('T', ' ').split('+')[0])
+        height = float(elements[i + 1].text[:-2])
+    tide_info = {
+        "tide": tide_type,
+        "time_local": data_time_local,
+        "height": height
+    }
+    tide_info_list.append(tide_info)
+
+print(tide_info_list)
