@@ -42,10 +42,10 @@ function generateCalendar() {
     // List of events
     const events = [
         { date: "2023-08-16", event: "EKKA" },
+        { date: "2023-10-31", event: "Halloween" },
         { date: "2023-11-10", event: "AGM" },
         { date: "2023-11-11", event: "AGM" },
-        { date: "2023-08-18", event: "Event 4" },
-        { date: "2023-08-19", event: tide_list[0].time_local },
+        { date: "2023-12-25", event: "Merry Christmas!" },
         // Add more events here...
     ];
 
