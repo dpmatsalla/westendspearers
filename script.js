@@ -10,7 +10,7 @@ function groupTidesByDate() {
         //tidesByDate[dateStr].types.push(tide.tide);
         //tidesByDate[dateStr].times.push(timeStr);
         //tidesByDate[dateStr].heights.push(tide.height);
-        tidesByDate.push({ date: dateStr, tide: timeStr+": "+tide.tide+" "+tide.height });
+        tidesByDate.push({ date: dateStr, event: timeStr+": "+tide.tide+" "+tide.height });
     });
     return tidesByDate;
 }
@@ -35,7 +35,7 @@ function generateCalendar() {
     currentDate.setDate(currentDate.getDate() - currentDate.getDay());  //set to the last Sunday
 
     // Get tides
-    const tides = groupTidesByDate(); // { date: "2023-08-01), tide: "5:21: LOW 0.21 m" }
+    const tides = groupTidesByDate(); // { date: "2023-08-01), event: "5:21: LOW 0.21 m" }
     
     // List of events
     const events = [
