@@ -7,6 +7,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 // Add markers 
 var orleighParkMarker = L.marker([-27.488299, 152.996411]).addTo(map);
 var rockMarker = L.marker([-27.504172, 153.009583]).addTo(map);
+var mercedesMarker = L.marker([-27.441405, 153.043811]).addTo(map);
 
 // Bind a popup to the marker
 orleighParkMarker.bindPopup("<b>Orleigh Park</b>").openPopup();
