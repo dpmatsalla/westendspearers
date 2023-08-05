@@ -1,19 +1,8 @@
-// Function to get the last Sunday before today
-function getLastSunday() {
-  const today = new Date();
-  const day = today.getDay();
-  const lastSunday = new Date(today);
-  lastSunday.setDate(today.getDate() - day);
-  return lastSunday;
-}
-
-
-
 // Generate calendar and events
 function generateCalendar() {
   const tableBody = document.querySelector("#calendar tbody");
-  const lastSunday = getLastSunday();
-  let currentDate = new Date(lastSunday);
+  let currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() - currentDate.getDay());  #set to the last Sunday
 
   // Dummy list of events
   const events = [
