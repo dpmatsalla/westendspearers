@@ -11,5 +11,5 @@ var mercedesMarker = L.marker([-27.441405, 153.043811]).addTo(map);
 
 // Bind a popup to the marker
 orleighParkMarker.bindPopup("<b>Orleigh Park</b>").openPopup();
-rockMarker.bindPopup("<b><a href="https://goo.gl/maps/sdDeoHEhbGUynhx58">The Rock</a></b>");
+rockMarker.bindPopup("<b><a href='https://goo.gl/maps/sdDeoHEhbGUynhx58'>The Rock</a></b>");
 mercedesMarker.bindPopup("<b>Breakfast Creek</b>");
