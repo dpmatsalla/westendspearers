@@ -4,8 +4,8 @@ function groupTidesByDate() {
     tide_list.forEach(function(tide) {
         var dateStr = tide.time_local.split('T')[0];
         var timeStr = tide.time_local.split('T')[1].substr(0,5);
-        if (tide.tide == 'HIGH') { tideStr = "&#8593;"; }
-        else { tideStr = "&#8595;"; }
+        if (tide.tide == 'HIGH') { tideStr = "↑"; }
+        else { tideStr = "↓"; }
         //if (!tidesByDate[dateStr]) {
         //    tidesByDate[dateStr] = { 'types': [], 'times': [], 'heights': [] };
         //}
