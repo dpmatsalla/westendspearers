@@ -59,14 +59,18 @@ function generateCalendar() {
             const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
             cell.textContent = cellDate;
     
-            // Check if any events on this date
-            const eventInfo = events.find(event => event.date === cellDate);
-            if (eventInfo) {
-                const eventElement = document.createElement("div");
-                eventElement.textContent = eventInfo.event;
-                cell.appendChild(eventElement);
+            // Check if there are any events on this date
+            const matchingEvents = events.filter(event => event.date === cellDate);
+            if (matchingEvents.length > 0) {
+                const eventsContainer = document.createElement("div");
+                matchingEvents.forEach(eventInfo => {
+                    const eventElement = document.createElement("div");
+                    eventElement.textContent = eventInfo.event;
+                    eventsContainer.appendChild(eventElement);
+                });
+                cell.appendChild(eventsContainer);
             }
-    
+            
             // Add today's date style
             if (cellDate === todayDate) {
                 cell.classList.add("today");
