@@ -1,5 +1,6 @@
 # Get the tides from the BOM website for the entire year, and put them into JSON format, so that they're available for the Spearers website
 # Just adjust the dates in the two urls and execute.  Cut and paste the result into the tide_list.js file.
+# Remember to replace all of the single quotes with double  ' --> "
 
 import requests
 from bs4 import BeautifulSoup
@@ -26,7 +27,7 @@ soup = BeautifulSoup(response.content, "html.parser")
 elements = soup.find_all("td")  # Find all <td>
 for i in range(0, len(elements), 2):
     if len(elements[i]["class"]) > 1:
-        tide_type = 1 if elements[i]["class"][1] == "high-tide" else 0
+        tide_type = "HIGH" if elements[i]["class"][1] == "high-tide" else "LOW"
         data_time_local = elements[i]["data-time-local"]
         #data_time_local = datetime.fromisoformat(data_time_local_str.replace('T', ' ').split('+')[0])
         height = float(elements[i + 1].text[:-2])
@@ -49,7 +50,7 @@ soup = BeautifulSoup(response.content, "html.parser")
 elements = soup.find_all("td")  # Find all <td>
 for i in range(0, len(elements), 2):
     if len(elements[i]["class"]) > 1:
-        tide_type = 1 if elements[i]["class"][1] == "high-tide" else 0
+        tide_type = "HIGH" if elements[i]["class"][1] == "high-tide" else "LOW"
         data_time_local = elements[i]["data-time-local"]
         #data_time_local = datetime.fromisoformat(data_time_local_str.replace('T', ' ').split('+')[0])
         height = float(elements[i + 1].text[:-2])
