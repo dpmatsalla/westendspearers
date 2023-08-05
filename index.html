@@ -27,6 +27,13 @@ Carolina Kayak Club:  https://ckc.clubexpress.com/content.aspx?page_id=0&club_id
     <title>The Spearers Kayaking Club</title>
     <link rel="icon" type="image/x-icon" href="spearers.png">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -76,7 +83,7 @@ Carolina Kayak Club:  https://ckc.clubexpress.com/content.aspx?page_id=0&club_id
         <section id="map">
             <!-- Your homepage content goes here -->
             <h2>Map</h2>
-            <!-- Add images and other content to showcase the club -->
+            <div id="map"></div>
         </section>
 
         <section id="calendarsection">
@@ -126,6 +133,7 @@ Carolina Kayak Club:  https://ckc.clubexpress.com/content.aspx?page_id=0&club_id
 
     <!-- Add your JavaScript file here for interactive features -->
     <script src="tide_list.js"></script>
-    <script src="script.js"></script>
+    <script src="calendar.js"></script>
+    <script src="map.js></script>
 </body>
 </html>
