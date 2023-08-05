@@ -1,3 +1,33 @@
+// Function to group the tide information by date and separate low and high tides
+function groupTidesByDate(tide_list) {
+    var tidesByDate = {}
+    tide_list.forEach(function(tide) {
+        var dateStr = tide.time_local.split('T')[0];
+        var timeStr = tide.time_local.split('T')[1].substr(0,5);
+        if (!tidesByDate[dateStr]) {
+            tidesByDate[dateStr] = { 'types': [], 'times': [], 'heights': [] };
+        }
+        tidesByDate[dateStr].types.push(tide.tide);
+        tidesByDate[dateStr].times.push(timeStr);
+        tidesByDate[dateStr].heights.push(tide.height);
+    });
+    return tidesByDate;
+}
+
+// return height for a timestamp
+function tideHeight(t, tide_list) {
+    var i = 0;
+    while (tide_list[i].time_stamp < t) {
+        i++;
+    }
+    var t0 = tide_list[i-1].time_stamp;
+    var t1 = tide_list[i].time_stamp;
+    var h0 = tide_list[i-1].height;
+    var h1 = tide_list[i].height;
+    return (h0 - h1)/2 * Math.cos(Math.PI*(t0 - t)/(t0 - t1)) + (h0 + h1)/2;
+}
+
+
 // Generate calendar and events
 function generateCalendar() {
   const tableBody = document.querySelector("#calendar tbody");
