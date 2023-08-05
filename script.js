@@ -42,6 +42,8 @@ function generateCalendar() {
         { date: "2023-08-04", event: "Event 1" },
         { date: "2023-08-13", event: "Event 2" },
         { date: "2023-08-18", event: "Event 3" },
+        { date: "2023-08-18", event: "Event 4" },
+        { date: "2023-08-18", event: "Event 5" },
         // Add more events here...
     ];
 
