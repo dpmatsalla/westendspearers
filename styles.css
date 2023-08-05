@@ -31,7 +31,7 @@ table {
 td {
     border: none;
     width: 33.33%;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
 }
 .calendar {
@@ -44,7 +44,7 @@ td {
   border: 1px solid #ccc;
   font-size: 8px;
   text-align: center;
-  padding: 2px;
+  padding: 0px;
 }
 .calendar thead {
   background-color: #333;
