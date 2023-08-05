@@ -1,3 +1,6 @@
+# Get the tides from the BOM website for the entire year, and put them into JSON format, so that they're available for the Spearers website
+# Just adjust the dates in the two urls and execute.  Cut and paste the result into the tide_list.js file.
+
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -8,9 +11,11 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
 }
 
-url = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-08-2023&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
+url1 = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-08-2023&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
+url2 = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-01-2024&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
+
 # Download the webpage content
-response = requests.get(url, headers=headers)
+response = requests.get(url1, headers=headers)
 if response.status_code != 200:
     print("Failed to download the webpage.")
     exit()
@@ -32,9 +37,8 @@ for i in range(0, len(elements), 2):
     }
     tide_info_list.append(tide_info)
 
-url = "http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-01-2024&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367"
 # Download the webpage content
-response = requests.get(url, headers=headers)
+response = requests.get(url2, headers=headers)
 if response.status_code != 200:
     print("Failed to download the webpage.")
     exit()
