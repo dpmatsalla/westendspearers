@@ -35,9 +35,9 @@ function generateCalendar() {
     currentDate.setDate(currentDate.getDate() - currentDate.getDay());  //set to the last Sunday
 
     // Get tides
-    var tidesByDate = groupTidesByDate();
+    const tides = groupTidesByDate(); // { date: "2023-08-01), tide: "5:21: LOW 0.21 m" }
     
-    // Dummy list of events
+    // List of events
     const events = [
         { date: "2023-08-04", event: "Event 1" },
         { date: "2023-08-13", event: "Event 2" },
@@ -59,8 +59,20 @@ function generateCalendar() {
             const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
             cell.textContent = cellDate;
     
+            // Update tides on this date
+            var matchingEvents = tides.filter(event => tides.date === cellDate);
+            if (matchingEvents.length > 0) {
+                const eventsContainer = document.createElement("div");
+                matchingEvents.forEach(eventInfo => {
+                    const eventElement = document.createElement("div");
+                    eventElement.textContent = eventInfo.event;
+                    eventsContainer.appendChild(eventElement);
+                });
+                cell.appendChild(eventsContainer);
+            }
+
             // Check if there are any events on this date
-            const matchingEvents = events.filter(event => event.date === cellDate);
+            matchingEvents = events.filter(event => event.date === cellDate);
             if (matchingEvents.length > 0) {
                 const eventsContainer = document.createElement("div");
                 matchingEvents.forEach(eventInfo => {
