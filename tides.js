@@ -2,8 +2,6 @@ function drawCurve() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
     const amplitude = 50; // Change this value to adjust the height of the curve
-    const frequency = 0.02; // Change this value to adjust the frequency of the curve
-    const phaseShift = 0; // Change this value to adjust the phase shift of the curve
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
