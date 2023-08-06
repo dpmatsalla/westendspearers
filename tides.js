@@ -40,41 +40,41 @@ function drawCurve() {
 
     // draw noon vertical lines
     ctx.beginPath();
-    ctx.rect((noon - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 0.5;
+    ctx.rect((noon - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.stroke();
 
     // draw midnight vertical lines
     ctx.beginPath();
-    ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 1;
+    ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.stroke();
 
     // draw 5am boxes
     ctx.fillStyle = "#E0E0C0";
     ctx.fillRect((next5am - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
-    //ctx.fillStyle = "#E0E0C0";
     ctx.fillRect((next5am + day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
 
     // draw horizontal lines 
     ctx.beginPath();
-    ctx.rect(0, yy - 3*amp, xx, 2*amp);
-    ctx.rect(0, yy - 2*amp, xx, 2*amp);
     ctx.strokeStyle = 'grey';
     ctx.lineWidth = 1;
+    ctx.rect(0, yy - 3*amp, xx, 2*amp);
+    ctx.rect(0, yy - 2*amp, xx, 2*amp);
     ctx.stroke();
 
     // draw text
     ctx.font = "20px Arial";
+    ctx.fillStyle = 'gray';
     ctx.fillText("3 m", 5, yy - 3*amp +15);
     ctx.fillText("2 m", 5, yy - 2*amp +15);
     ctx.fillText("1 m", 5, yy - amp +15);
-    ctx.strokeStyle = 'red';
+    ctx.fillStyle = 'red';
     ctx.fillText("Now", (now - timeStart)*xx/duration, 5);
     ctx.font = "12px Arial";
-    ctx.strokeStyle = 'blue';
+    ctx.fillStyle = 'blue';
     ctx.fillText("0:00", (midnight - timeStart)*xx/duration, 5);
     ctx.fillText("12:00", (noon - timeStart)*xx/duration, 5);
     ctx.fillText("5:00", (next5am - timeStart)*xx/duration, 5); 
