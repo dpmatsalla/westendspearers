@@ -11,6 +11,11 @@ function drawCurve() {
     const duration = 2 * 24*3600*1000;  //two days hence
     const timeEnd = timeStart + duration;
     
+    ctx.moveTo(0,canvas.height);
+    ctx.lineTo(canvas.width,canvas.height);
+    ctx.strokeStyle = '#111';
+    ctx.stroke();
+
     for (let x = timeStart; x < timeEnd; x += 1*3600) {
       const y = canvas.height - amplitude * tideHeight(x);
       ctx.lineTo((x - timeStart)*canvas.width/duration, y);
