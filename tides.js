@@ -55,7 +55,7 @@ function drawCurve() {
     // draw 5am boxes
     ctx.fillStyle = "#E0E0C0";
     ctx.fillRect((next5am - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
-    ctx.fillStyle = "#E0E0C0";
+    //ctx.fillStyle = "#E0E0C0";
     ctx.fillRect((next5am + day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
 
     // draw horizontal lines 
@@ -65,6 +65,13 @@ function drawCurve() {
     ctx.strokeStyle = '#111';
     ctx.lineWidth = 1;
     ctx.stroke();
+
+    // draw text
+    ctx.font = "30px Arial";
+    ctx.fillText("3 m", 5, yy - 3*amp +5);
+    ctx.fillText("2 m", 5, yy - 2*amp +5);
+    ctx.fillText("1 m", 5, yy - amp +5);
+    ctx.fillText("Now", (now - timeStart)*xx/duration, 5);
 
     // draw tides, 15 min intervals 
     ctx.beginPath();
