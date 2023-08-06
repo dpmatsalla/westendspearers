@@ -73,9 +73,9 @@ function drawCurve() {
     ctx.fillText("1 m", 5, yy - amp +18);
     ctx.font = "12px Arial";
     ctx.fillStyle = 'red';
-    ctx.fillText("Now", (now - timeStart)*xx/duration - 18, yy/2);
+    ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/2);
     ctx.fillStyle = 'blue';
-    ctx.fillText("0:00", (midnight - timeStart)*xx/duration - 15, 15);
+    ctx.fillText("00:00", (midnight - timeStart)*xx/duration - 15, 15);
     ctx.fillText("12:00", (noon - timeStart)*xx/duration - 15, 15);
     ctx.fillStyle = 'brown';
     ctx.fillText("5:00", (next5am - timeStart)*xx/duration, yy-15);
