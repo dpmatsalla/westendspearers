@@ -11,11 +11,18 @@ function drawCurve() {
     const duration = 48*3600*1000;  //two days window
     const timeEnd = timeStart + duration;
     const midnight = (Math.round(timeStart/24/3600/1000) + 1)*24*3600*1000;
+    const day = 24*3600*1000;
     
     ctx.clearRect(0, 0, xx, yy);
 
     ctx.beginPath();
-    ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, 24*3600*1000*xx/duration, 3*amp);
+    ctx.rect((midnight + day/2 - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 1;
     ctx.stroke();
@@ -28,7 +35,7 @@ function drawCurve() {
     ctx.stroke();
 
     ctx.beginPath();
-    for (let x = timeStart; x < timeEnd; x += 1*3600) {
+    for (let x = timeStart; x < timeEnd; x += 1*3600*1000) {
       const y = amp*tideHeight(x);
       ctx.lineTo((x - timeStart)*xx/duration, yy - y);
     }
