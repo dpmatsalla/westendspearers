@@ -18,18 +18,23 @@ function drawCurve() {
     const duration = 2*day;
     const timeEnd = timeStart + duration;
 
-    // get next midnight & noon
-    const nextTime = new Date();
+    // get next midnight & noon & 5am
+    let nextTime = new Date();
     nextTime.setHours(12,0,0,0);   
     if (nextTime.getTime() <= Date.now()) {
         nextTime.setDate(nextTime.getDate() + 1);
 }
     const noon = nextTime.getTime();
+    nextTime = new Date();
     nextTime.setHours(0, 0, 0, 0);
+    nextTime.setDate(nextTime.getDate() + 1);
+    const midnight = nextTime.getTime();
+    nextTime = new Date();
+    nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= Date.now()) {
         nextTime.setDate(nextTime.getDate() + 1);
 }
-    const midnight = nextTime.getTime();
+    const next5am = nextTime.getTime();
 
     ctx.clearRect(0, 0, xx, yy);
 
@@ -46,6 +51,10 @@ function drawCurve() {
     ctx.strokeStyle = "blue";
     ctx.lineWidth = 1;
     ctx.stroke();
+
+    // draw 5am boxes
+    ctx.fillStyle = "#FFAAAA";
+    ctx.fillRect((next5am - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
 
     // draw horizontal lines 
     ctx.beginPath();
