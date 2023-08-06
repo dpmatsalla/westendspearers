@@ -25,8 +25,6 @@ function drawCurve() {
 }
     const midnight = nextTime.getTime();
 
-
-
     ctx.clearRect(0, 0, xx, yy);
 
     // draw noon vertical lines
@@ -51,7 +49,7 @@ function drawCurve() {
     ctx.stroke();
 
     ctx.beginPath();
-    for (let x = timeStart; x < timeEnd; x += 1*3600*1000) {
+    for (let x = timeStart; x < timeEnd; x += 0.25*3600*1000) {
       const y = amp*tideHeight(x);
       ctx.lineTo((x - timeStart)*xx/duration, yy - y);
     }
