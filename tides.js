@@ -5,22 +5,24 @@ function drawCurve() {
     const xx = canvas.width;
     const yy = canvas.height;
 
+    const day = 24*3600*1000;
     const currentDate = new Date();
     const now = currentDate.getTime();
     const timeStart = now - 6*3600*1000;  //6hrs ago
-    const duration = 48*3600*1000;  //two days window
+    const duration = 2*day;
     const timeEnd = timeStart + duration;
-    const midnight = (Math.round(timeStart/24/3600/1000) + 1)*24*3600*1000;
-    const day = 24*3600*1000;
+    const midnight = (Math.round(timeStart/day) + 1)*day;
     
     ctx.clearRect(0, 0, xx, yy);
 
+    // draw noon vertical lines
     ctx.beginPath();
     ctx.rect((midnight + day/2 - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.5;
     ctx.stroke();
 
+    // draw midnight vertical lines
     ctx.beginPath();
     ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
