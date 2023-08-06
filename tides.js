@@ -6,8 +6,9 @@ function drawCurve() {
     const yy = canvas.height;
 
     const currentDate = new Date();
-    const timeStart = currentDate.getTime();
-    const duration = 2 * 24*3600*1000;  //two days hence
+    const now = currentDate.getTime();
+    const timeStart = now - 6*3600*1000;  //6hrs ago
+    const duration = 48*3600*1000;  //two days window
     const timeEnd = timeStart + duration;
     
     ctx.clearRect(0, 0, xx, yy);
@@ -15,15 +16,23 @@ function drawCurve() {
     ctx.rect(0, yy - 3*amp, xx, 2*amp);
     ctx.rect(0, yy - 2*amp, xx, 2*amp);
     ctx.strokeStyle = '#111';
+    ctx.lineWidth = 1;
     ctx.stroke();
 
-    
     ctx.beginPath();
     for (let x = timeStart; x < timeEnd; x += 1*3600) {
       const y = amp*tideHeight(x);
       ctx.lineTo((x - timeStart)*xx/duration, yy - y);
     }
     ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo((now - timeStart)*xx/duration, yy);
+    ctx.limeTo((now - timeStart)*xx/duration, yy - 3*amp);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
     ctx.stroke();
 }
 
