@@ -62,16 +62,19 @@ function drawCurve() {
     ctx.beginPath();
     ctx.rect(0, yy - 3*amp, xx, 2*amp);
     ctx.rect(0, yy - 2*amp, xx, 2*amp);
-    ctx.strokeStyle = '#111';
+    ctx.strokeStyle = 'grey';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     // draw text
-    ctx.font = "30px Arial";
+    ctx.font = "20px Arial";
     ctx.fillText("3 m", 5, yy - 3*amp +5);
     ctx.fillText("2 m", 5, yy - 2*amp +5);
     ctx.fillText("1 m", 5, yy - amp +5);
+    ctx.strokeStyle = 'red';
     ctx.fillText("Now", (now - timeStart)*xx/duration, 5);
+    ctx.font = "12px Arial";
+    ctx.strokeStyle = 'blue';
     ctx.fillText("0:00", (midnight - timeStart)*xx/duration, 5);
     ctx.fillText("12:00", (noon - timeStart)*xx/duration, 5);
     ctx.fillText("5:00", (next5am - timeStart)*xx/duration, 5); 
