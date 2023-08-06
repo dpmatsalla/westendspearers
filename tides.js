@@ -10,8 +10,16 @@ function drawCurve() {
     const timeStart = now - 6*3600*1000;  //6hrs ago
     const duration = 48*3600*1000;  //two days window
     const timeEnd = timeStart + duration;
+    const midnight = (Math.round(timeStart/24/3600/1000) + 1)*24*3600*1000;
     
     ctx.clearRect(0, 0, xx, yy);
+
+    ctx.beginPath();
+    ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, 24*3600*1000*xx/duration, 3*amp);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
     ctx.beginPath();
     ctx.rect(0, yy - 3*amp, xx, 2*amp);
     ctx.rect(0, yy - 2*amp, xx, 2*amp);
