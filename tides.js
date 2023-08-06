@@ -1,7 +1,7 @@
 function drawCurve() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    const amplitude = 50; // Change this value to adjust the height of the curve
+    const amplitude = 100; // Change this value to adjust the height of the curve
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
