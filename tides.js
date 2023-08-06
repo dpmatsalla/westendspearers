@@ -1,3 +1,9 @@
+function nextTide() {
+    let nextTide = document.getElementById('nextTide');
+
+    nextTide.innerHTML = "Next Tide";
+}
+
 function drawCurve() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
@@ -68,5 +74,5 @@ function drawCurve() {
     ctx.stroke();
 }
 
-// Call the function to draw the curve
+nextTide();
 drawCurve();
