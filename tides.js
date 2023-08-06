@@ -19,17 +19,17 @@ function drawCurve() {
     const timeEnd = timeStart + duration;
 
     // get next midnight & noon & 5am
-    let nextTime = new Date();
+    let nextTime = new Date(timeStart);
     nextTime.setHours(12,0,0,0);   
     if (nextTime.getTime() <= Date.now()) {
         nextTime.setDate(nextTime.getDate() + 1);
 }
     const noon = nextTime.getTime();
-    nextTime = new Date();
+    nextTime = new Date(timeStart);
     nextTime.setHours(0, 0, 0, 0);
     nextTime.setDate(nextTime.getDate() + 1);
     const midnight = nextTime.getTime();
-    nextTime = new Date();
+    nextTime = new Date(timeStart);
     nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= Date.now()) {
         nextTime.setDate(nextTime.getDate() + 1);
