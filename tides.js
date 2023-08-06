@@ -12,8 +12,8 @@ function drawCurve() {
     
     ctx.clearRect(0, 0, xx, yy);
     ctx.beginPath();
-    ctx.rect(0, yy, xx, yy - 3*amp);
-    ctx.rect(0, yy - amp, xx, yy - 2*amp);
+    ctx.rect(0, yy - 3*amp, xx, 2*amp);
+    ctx.rect(0, yy - 2*amp, xx, 2*amp);
     ctx.strokeStyle = '#111';
     ctx.stroke();
 
