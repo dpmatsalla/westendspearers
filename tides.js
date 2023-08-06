@@ -1,4 +1,4 @@
-function drawSinusoidalCurve() {
+function drawCurve() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
     const amplitude = 50; // Change this value to adjust the height of the curve
@@ -9,6 +9,9 @@ function drawSinusoidalCurve() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
 
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    
     for (let x = 0; x < canvas.width; x++) {
       const y = amplitude * Math.sin(frequency * x + phaseShift) + yOffset;
       ctx.lineTo(x, y);
@@ -19,4 +22,4 @@ function drawSinusoidalCurve() {
 }
 
 // Call the function to draw the curve
-drawSinusoidalCurve();
+drawCurve();
