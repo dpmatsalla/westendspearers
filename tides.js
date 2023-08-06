@@ -41,6 +41,7 @@ function drawCurve() {
     ctx.lineWidth = 1;
     ctx.stroke();
 
+    // draw horizontal lines 
     ctx.beginPath();
     ctx.rect(0, yy - 3*amp, xx, 2*amp);
     ctx.rect(0, yy - 2*amp, xx, 2*amp);
@@ -48,6 +49,7 @@ function drawCurve() {
     ctx.lineWidth = 1;
     ctx.stroke();
 
+    // draw tides, 15 min intervals 
     ctx.beginPath();
     for (let x = timeStart; x < timeEnd; x += 0.25*3600*1000) {
       const y = amp*tideHeight(x);
@@ -57,9 +59,10 @@ function drawCurve() {
     ctx.lineWidth = 3;
     ctx.stroke();
 
+    // draw now line
     ctx.beginPath();
     ctx.moveTo((now - timeStart)*xx/duration, yy);
-    ctx.limeTo((now - timeStart)*xx/duration, yy - 3*amp);
+    ctx.lineTo((now - timeStart)*xx/duration, yy - 3*amp);
     ctx.strokeStyle = "red";
     ctx.lineWidth = 4;
     ctx.stroke();
