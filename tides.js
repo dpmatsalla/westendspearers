@@ -53,8 +53,9 @@ function drawCurve() {
     ctx.stroke();
 
     // draw 5am boxes
-    ctx.fillStyle = "#FFAAAA";
+    ctx.fillStyle = "#F0F0D0";
     ctx.fillRect((next5am - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
+    ctx.fillRect((next5am + day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
 
     // draw horizontal lines 
     ctx.beginPath();
