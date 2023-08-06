@@ -75,9 +75,9 @@ function drawCurve() {
     ctx.fillText("Now", (now - timeStart)*xx/duration - 50, 20);
     ctx.font = "12px Arial";
     ctx.fillStyle = 'blue';
-    ctx.fillText("0:00", (midnight - timeStart)*xx/duration - 30, 5);
-    ctx.fillText("12:00", (noon - timeStart)*xx/duration - 30, 5);
-    ctx.fillText("5:00", (next5am - timeStart)*xx/duration - 30, 5); 
+    ctx.fillText("0:00", (midnight - timeStart)*xx/duration - 30, 20);
+    ctx.fillText("12:00", (noon - timeStart)*xx/duration - 30, 20);
+    ctx.fillText("5:00", (next5am - timeStart)*xx/duration - 30, 20); 
     
 
     // draw tides, 15 min intervals 
