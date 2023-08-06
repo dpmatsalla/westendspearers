@@ -68,9 +68,9 @@ function drawCurve() {
 
     // draw text
     ctx.font = "20px Arial";
-    ctx.fillText("3 m", 5, yy - 3*amp +5);
-    ctx.fillText("2 m", 5, yy - 2*amp +5);
-    ctx.fillText("1 m", 5, yy - amp +5);
+    ctx.fillText("3 m", 5, yy - 3*amp +15);
+    ctx.fillText("2 m", 5, yy - 2*amp +15);
+    ctx.fillText("1 m", 5, yy - amp +15);
     ctx.strokeStyle = 'red';
     ctx.fillText("Now", (now - timeStart)*xx/duration, 5);
     ctx.font = "12px Arial";
