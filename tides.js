@@ -11,22 +11,36 @@ function drawCurve() {
     const timeStart = now - 6*3600*1000;  //6hrs ago
     const duration = 2*day;
     const timeEnd = timeStart + duration;
-    const midnight = (Math.round(timeStart/day) + 1)*day;
-    
+
+    // get next midnight & noon
+    const nextTime = new Date();
+    nextTime.setHours(12,0,0,0);   
+    if (nextTime.getTime() <= Date.now()) {
+        nextTime.setDate(nextTime.getDate() + 1);
+}
+    const noon = nextTime.getTime();
+    nextTime.setHours(0, 0, 0, 0);
+    if (nextTime.getTime() <= Date.now()) {
+        nextTime.setDate(nextTime.getDate() + 1);
+}
+    const midnight = nextTime.getTime();
+
+
+
     ctx.clearRect(0, 0, xx, yy);
 
     // draw noon vertical lines
     ctx.beginPath();
-    ctx.rect((midnight + day/2 - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
+    ctx.rect((noon - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
-    ctx.lineWidth = 0.5;
+    ctx.lineWidth = 1;
     ctx.stroke();
 
     // draw midnight vertical lines
     ctx.beginPath();
     ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     ctx.beginPath();
@@ -42,14 +56,14 @@ function drawCurve() {
       ctx.lineTo((x - timeStart)*xx/duration, yy - y);
     }
     ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo((now - timeStart)*xx/duration, yy);
     ctx.limeTo((now - timeStart)*xx/duration, yy - 3*amp);
     ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 4;
     ctx.stroke();
 }
 
