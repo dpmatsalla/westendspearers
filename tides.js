@@ -12,7 +12,7 @@ function drawCurve() {
     const timeEnd = timeStart + duration;
     
     for (let x = timeStart; x < timeEnd; x += 1*3600) {
-      const y = amplitude * tideHeight(x);  // To center the curve vertically
+      const y = canvas.height - amplitude * tideHeight(x);
       ctx.lineTo((x - timeStart)*canvas.width/duration, y);
     }
 
