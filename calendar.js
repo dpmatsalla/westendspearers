@@ -57,8 +57,8 @@ function generateCalendar() {
     // Get today's date in "YYYY-MM-DD"
     const todayDate = new Date().toISOString().split("T")[0];
 
-    // Generate 6 weeks of calendar
-    for (let week = 0; week < 6; week++) {
+    // Generate 10 weeks of calendar
+    for (let week = 0; week < 10; week++) {
         const row = document.createElement("tr");
 
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
