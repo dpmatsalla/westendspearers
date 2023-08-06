@@ -31,14 +31,14 @@ function drawCurve() {
     ctx.beginPath();
     ctx.rect((noon - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 0.5;
     ctx.stroke();
 
     // draw midnight vertical lines
     ctx.beginPath();
     ctx.rect((midnight - timeStart)*xx/duration, yy - 3*amp, day*xx/duration, 3*amp);
     ctx.strokeStyle = "blue";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.beginPath();
