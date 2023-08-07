@@ -22,6 +22,7 @@ function adjustTides() {
         else { tideTime += 0.75*3600*1000; }
 
         tide_list[i].time_stamp = tideTime;
+        tide_list[i].time_local = new Date(tideTime).toISOString();
     }
 }
 
