@@ -1,5 +1,5 @@
 // Adjust tides for current and add timestamp
-function adjustTides {
+function adjustTides() {
     var tideTime;
     for (var i=0; i < tide_list.length; i++) {
         tideTime = Date.parse(tide_list[i].time_local);
