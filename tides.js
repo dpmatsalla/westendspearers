@@ -1,7 +1,38 @@
+function tideText(t) {
+    let t1 = tideHeight(t);
+    let t0 = tideHeight(t - 1*3600*1000);
+    let t2 = tideHeight(t + 1*3600*1000);
+    let text = t1.toFixed(1) + 'm ';
+
+    if (t1 > t0) {
+        if (t2 > t1) {text += 'incoming';}
+        else {text += 'high neutral';}
+    } else {
+        if (t2 < t1) {text += 'outgoing';}
+        else {text += 'low neutral';}
+    }
+    return text;
+}
+
 function nextTide() {
     let nextTide = document.getElementById('nextTide');
+    const day = 24*3600*1000;
+    const currentDate = new Date();
+    const now = currentDate.getTime();
+    
+    nextTide.innerHTML = "Current conditions: " + tideText(now) + "<br>";
 
-    nextTide.innerHTML = "Next Tide";
+    // get next5am timestamp
+    let nextTime = new Date(timeStart);
+    nextTime.setHours(5,0,0,0);   
+    if (nextTime.getTime() <= now) {
+        nextTime.setDate(nextTime.getDate() + 1);
+}
+    const next5am = nextTime.getTime();
+
+    var nextDate =  nextTime.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    nextTide.innerHTML += 'Conditions ' + nextDate + ' at 5am: ' + tideText(next5am);
+        
 }
 
 function drawCurve() {
@@ -87,8 +118,8 @@ function drawCurve() {
 
         ctx.font = "18px Arial";
         nextTime = new Date(noon + i*day);
-        var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 30);
+        var nextDate =  nextTime.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 10);
 
     }
     
