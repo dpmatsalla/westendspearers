@@ -23,7 +23,7 @@ function nextTide() {
     nextTide.innerHTML = "Current conditions: " + tideText(now) + "<br>";
 
     // get next5am timestamp
-    let nextTime = new Date(timeStart);
+    let nextTime = new Date(now);
     nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= now) {
         nextTime.setDate(nextTime.getDate() + 1);
