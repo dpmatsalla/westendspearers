@@ -1,5 +1,5 @@
 canvas {
-    border: 1px solid #000;
+    border: 1px solid #000000;
     background-color: beige;
 }
 #map {
@@ -46,20 +46,20 @@ td {
   background-color: beige;
 }
 .calendar th, .calendar td {
-  border: 1px solid #ccc;
+  border: 1px solid gray;
   font-size: 7px;
   vertical-align: top;
   text-align: center;
   padding: 0px;
 }
 .calendar thead {
-  background-color: #333;
+  background-color: darkblue;
   font-size: 12px;
-  color: #fff;
+  color: #fff000;
 }
 .calendar .today {
   font-weight: bold;
-  text-decoration: underline;
+  color: red;
 }
 .content {
   background-color: darkgreen;
