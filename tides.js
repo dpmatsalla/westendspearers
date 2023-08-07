@@ -27,7 +27,7 @@ function nextTide() {
     nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= now) {
         nextTime.setDate(nextTime.getDate() + 1);
-}
+    }
     const next5am = nextTime.getTime();
 
     var nextDate =  nextTime.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
