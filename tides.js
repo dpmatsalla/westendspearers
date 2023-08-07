@@ -75,13 +75,21 @@ function drawCurve() {
     
         // draw 5am boxes
         ctx.fillStyle = "#E0E0C0";
-        ctx.fillRect((next5am + i*day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);  //replace
-    
-        ctx.fillStyle = 'blue';
-        ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);   //replace
-        ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);  //replace
+        ctx.fillRect((next5am + i*day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
+
+        // text
+        ctx.font = "12px Arial";
         ctx.fillStyle = 'brown';
-        ctx.fillText("05:00", (next5am + i*day - timeStart)*xx/duration - 15, 15);  //replace
+        ctx.fillText("05:00", (next5am + i*day - timeStart)*xx/duration - 15, 15);
+        ctx.fillStyle = 'blue';
+        ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);
+        ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);
+
+        ctx.font = "18px Arial";
+        nextTime = new Date(noon + i*day);
+        var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 30);
+
     }
     
     // draw tides, 15 min intervals 
