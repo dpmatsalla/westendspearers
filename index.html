@@ -1,16 +1,10 @@
 <!--
-0. Welcome and photos like https://ckc.clubexpress.com/#top
-* create a photo gallery section
-1. Tides and Weather - adjust for current
-* Also precepitation last 24 hours - and impact on tides
-* Weather - winds, sunrise, sunset, temp
-  - https://www.data.qld.gov.au/dataset/brisbane-bar-tide-gauge-predicted-interval-data/resource/8a5a5e32-2ed4-4252-8c2a-074188556d5b
-  - http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-08-2023&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=20
-  - http://www.bom.gov.au/australia/tides/scripts/getNextTides.php?aac=QLD_TP138&offset=false&tz=Australia%2FBrisbane 
-  - https://community.home-assistant.io/t/restful-sensor-json-help-australian-tide-predictions-bom/149663/19
-*4. Map - label piss corner, etc
-* put on polylines with the typical routes we take, with popups with distance info, etc.
-*8. Contact us
+References:
+- https://ckc.clubexpress.com/#top
+- https://www.data.qld.gov.au/dataset/brisbane-bar-tide-gauge-predicted-interval-data/resource/8a5a5e32-2ed4-4252-8c2a-074188556d5b
+- http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=01-08-2023&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=20
+- http://www.bom.gov.au/australia/tides/scripts/getNextTides.php?aac=QLD_TP138&offset=false&tz=Australia%2FBrisbane 
+- https://community.home-assistant.io/t/restful-sensor-json-help-australian-tide-predictions-bom/149663/19
 -->
 
 <!DOCTYPE html>
@@ -60,12 +54,13 @@
         
         <section id="home">
             <h2>Home</h2>
-            <p>We are a group that enjoys paddling on the Brisbane River every Monday, Wednesday, and Friday at 5am.<br>(Include a few more photos)</p>
+            <p>We are a group that enjoys paddling on the Brisbane River every Monday, Wednesday, and Friday at 5am.<br>
+              (Include a photo gallery)</p>
         </section>
 
         <section id="tides">
             <h2>Tides and Weather</h2>
-            <p>(Show the tides and weather at next day at 5am)</p>
+            <p>(+ precepitation last 24h & impact on tides, + winds, sunrise, sunset, temp)</p>
             <div id="nextTide"></div>
             <canvas id="myCanvas" width="350" height="240"></canvas>
         </section>
@@ -143,7 +138,7 @@
         </section>
 
         <h2>Map</h2>
-        <p>(Include more useful places on map, as well as the route and stats for rock and the city)</p>
+        <p>(+ more boat launches, piss corner, + route and stats for rock and the city)</p>
         <section id="map">
             <div id="map"></div>
         </section>
