@@ -64,7 +64,7 @@ function generateCalendar() {
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             const cell = document.createElement("td");
             const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
-            cell.textContent = cellDate;
+            cell.textContent = currentDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
     
             // Update tides on this date
             var matchingEvents = tides.filter(event => event.date === cellDate);
