@@ -55,6 +55,7 @@ function generateCalendar() {
     // List of events
     const events = [
         { date: "2023-08-16", event: "EKKA" },
+        { date: "2023-08-18", event: "Cheese" },
         { date: "2023-10-31", event: "Halloween" },
         { date: "2023-11-10", event: "AGM" },
         { date: "2023-11-11", event: "AGM" },
