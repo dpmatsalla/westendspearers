@@ -27,7 +27,11 @@ function nextTide() {
         nextTime.setDate(nextTime.getDate() + 1);
     }
     const next5am = nextTime.getTime();
-    var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    let nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+
+    let nextTime2 = new Date(now);
+    nextTime2.setDate(nextTime.getDate() + 1);
+    let nextDate2 =  nextTime2.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
     nextTide.innerHTML = '<table width="100%"><tr> \
           <th>Date/Time</th> \
@@ -40,16 +44,11 @@ function nextTide() {
         </tr><tr> \
           <td>' + nextDate + ', 5am</td> \
           <td>' + tideText(next5am) + '</td> \
-        <td></td> \
-      </tr>';
-
-    nextTime.setDate(nextTime.getDate() + 1);
-    nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-
-    nextTide.innerHTML += '<tr> \
-        <td>' + nextDate + ', 5am</td> \
-        <td>' + tideText(next5am + day) + '</td> \
-        <td></td> \
+          <td></td> \
+        </tr><tr> \
+          <td>' + nextDate2 + ', 5am</td> \
+          <td>' + tideText(next5am + day) + '</td> \
+          <td></td> \
       </tr></table>';
         
 }
