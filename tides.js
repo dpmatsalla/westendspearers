@@ -20,6 +20,15 @@ function nextTide() {
     const currentDate = new Date();
     const now = currentDate.getTime();
     
+    // get next5am timestamp
+    let nextTime = new Date(now);
+    nextTime.setHours(5,0,0,0);   
+    if (nextTime.getTime() <= now) {
+        nextTime.setDate(nextTime.getDate() + 1);
+    }
+    const next5am = nextTime.getTime();
+    var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+
     nextTide.innerHTML = '<table width="100%"><tr> \
           <th>Date/Time</th> \
           <th>Tide</th> \
@@ -28,21 +37,9 @@ function nextTide() {
           <td>Now</td> \
           <td>' + tideText(now) + '</td> \
           <td></td> \
-        </tr>';
-
-    // get next5am timestamp
-    let nextTime = new Date(now);
-    nextTime.setHours(5,0,0,0);   
-    if (nextTime.getTime() <= now) {
-        nextTime.setDate(nextTime.getDate() + 1);
-    }
-    const next5am = nextTime.getTime();
-
-    var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-
-    nextTide.innerHTML += '<tr> \
-        <td>' + nextDate + ', 5am</td> \
-        <td>' + tideText(next5am) + '</td> \
+        </tr><tr> \
+          <td>' + nextDate + ', 5am</td> \
+          <td>' + tideText(next5am) + '</td> \
         <td></td> \
       </tr>';
 
