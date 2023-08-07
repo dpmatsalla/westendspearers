@@ -5,6 +5,7 @@ function formatDate(timestamp) {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    hour12: false,
   };
   const dateParts = new Date(timestamp).toLocaleDateString('en-US', options).split('/');
   const formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`;
