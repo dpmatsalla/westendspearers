@@ -1,3 +1,17 @@
+// Adjust tides for current and add timestamp
+function adjustTides {
+    var tideTime;
+    for (var i=0; i < tide_list.length; i++) {
+        tideTime = Date.parse(tide_list[i].time_local);
+        if (tide_list[i].tide === 'HIGH') { tideTime += 1*3600*1000; }
+        else { tideTime -= 1*3600*1000; }
+
+        tide_list[i].time_stamp = tideTime;
+        tide_list[i].time_local = new Date(tideTime);
+    }
+
+}
+
 // Function to group the tide information by date and separate low and high tides
 function groupTidesByDate() {
     var tidesByDate = [];
@@ -35,11 +49,6 @@ function generateCalendar() {
     const tableBody = document.querySelector("#calendar tbody");
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() - currentDate.getDay());  //set to the last Sunday
-
-    // add the timestamp to the tide_list
-    for (var i=0; i < tide_list.length; i++) {
-        tide_list[i].time_stamp = Date.parse(tide_list[i].time_local);
-    }
     
     // Get tides
     const tides = groupTidesByDate(); // { date: "2023-08-01), event: "5:21: LOW 0.21 m" }
@@ -102,5 +111,5 @@ function generateCalendar() {
     }
 }
 
-// Call function to generate the calendar
+adjustTides();
 generateCalendar();
