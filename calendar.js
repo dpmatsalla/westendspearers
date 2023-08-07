@@ -1,6 +1,6 @@
 // convert date & time
-function formatDate(time_stamp) {
-  const date = new Date(time_stamp);
+function formatDate(timestamp) {
+  const date = new Date(timestamp);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
   const day = String(date.getDate()).padStart(2, '0');
@@ -13,7 +13,7 @@ function formatTime(timestamp) {
   return `${hours}:${minutes}`;
 }
 
-// Adjust tides for current and add time_stamp
+// Adjust tides for current and add timestamp
 function adjustTides() {
     var tideTime;
     for (var i=0; i < tide_list.length; i++) {
@@ -21,7 +21,7 @@ function adjustTides() {
         if (tide_list[i].tide === 'HIGH') { tideTime -= 0.75*3600*1000; }
         else { tideTime += 0.75*3600*1000; }
 
-        tide_list[i].time_stamp = tideTime;
+        tide_list[i].timestamp = tideTime;
         tide_list[i].time_local = new Date(tideTime).toISOString();
     }
 }
@@ -30,8 +30,8 @@ function adjustTides() {
 function groupTidesByDate() {
     var tidesByDate = [];
     tide_list.forEach(function(tide) {
-        var dateStr = formatDate(tide.time_stamp);
-        var timeStr = formatTime(tide.time_stamp);
+        var dateStr = formatDate(tide.timestamp);
+        var timeStr = formatTime(tide.timestamp);
         if (tide.tide == 'HIGH') { tideStr = "↑"; }
         else { tideStr = "↓"; }
         //if (!tidesByDate[dateStr]) {
@@ -45,14 +45,14 @@ function groupTidesByDate() {
     return tidesByDate;
 }
 
-// return height for a time_stamp
+// return height for a timestamp
 function tideHeight(t) {
     var i = 0;
-    while (tide_list[i].time_stamp < t) {
+    while (tide_list[i].timestamp < t) {
         i++;
     }
-    var t0 = tide_list[i-1].time_stamp;
-    var t1 = tide_list[i].time_stamp;
+    var t0 = tide_list[i-1].timestamp;
+    var t1 = tide_list[i].timestamp;
     var h0 = tide_list[i-1].height;
     var h1 = tide_list[i].height;
     return (h0-h1)/2*Math.cos(Math.PI*(t0-t)/(t0-t1)) + (h0+h1)/2;
