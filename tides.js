@@ -2,7 +2,7 @@ function tideText(t) {
     let t1 = tideHeight(t);
     let t0 = tideHeight(t - 1*3600*1000);
     let t2 = tideHeight(t + 1*3600*1000);
-    let text = t1.toFixed(1) + 'm ';
+    let text = t1.toFixed(1) + ' m ';
 
     if (t1 > t0) {
         if (t2 > t1) {text += 'incoming';}
