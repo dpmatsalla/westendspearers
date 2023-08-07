@@ -54,7 +54,7 @@ function drawCurve() {
     ctx.fillText("1 m", 5, yy - amp +18);
     ctx.font = "12px Arial";
     ctx.fillStyle = 'red';
-    ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/2);
+    ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/5);
 
     for (var i=0; i<2; i++) {
         // draw midnight vertical lines
