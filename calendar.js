@@ -1,16 +1,23 @@
-// convert date & time
-function formatDate(timestamp) {
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+// convert date & time in Brisbane timezone UTC+10
+function formatDateInBrisbane(timestamp) {
+  const options = {
+    timeZone: 'Australia/Brisbane',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  };
+  const dateParts = new Date(timestamp).toLocaleDateString('en-US', options).split('/');
+  const formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`;
+  return formattedDate;
 }
 function formatTime(timestamp) {
-  const date = new Date(timestamp);
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${hours}:${minutes}`;
+  const options = {
+    timeZone: 'Australia/Brisbane',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+  const formattedTime = new Date(timestamp).toLocaleString('en-US', options);
+  return formattedTime;
 }
 
 // Adjust tides for current and add timestamp
