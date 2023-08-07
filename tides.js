@@ -56,40 +56,33 @@ function drawCurve() {
     ctx.fillStyle = 'red';
     ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/2);
 
-    
+    for (var i=0; i<2; i++) {
         // draw midnight vertical lines
         ctx.beginPath();
         ctx.strokeStyle = "blue";
         ctx.lineWidth = 1;
-        ctx.moveTo((midnight - timeStart)*xx/duration, yy - 3*amp);
-        ctx.lineTo((midnight - timeStart)*xx/duration, yy);
-        ctx.moveTo((midnight + day - timeStart)*xx/duration, yy - 3*amp);  //replace
-        ctx.lineTo((midnight + day - timeStart)*xx/duration, yy);
+        ctx.moveTo((midnight + i*day - timeStart)*xx/duration, yy - 3*amp);  //replace
+        ctx.lineTo((midnight + i*day - timeStart)*xx/duration, yy);
         ctx.stroke();
     
         // draw noon vertical lines
         ctx.beginPath();
         ctx.strokeStyle = "blue";
         ctx.lineWidth = 0.5;
-        ctx.moveTo((noon - timeStart)*xx/duration, yy - 3*amp);
-        ctx.lineTo((noon - timeStart)*xx/duration, yy);
-        ctx.moveTo((noon + day - timeStart)*xx/duration, yy - 3*amp);  //replace
-        ctx.lineTo((noon + day - timeStart)*xx/duration, yy);
+        ctx.moveTo((noon + i*day - timeStart)*xx/duration, yy - 3*amp);  //replace
+        ctx.lineTo((noon + i*day - timeStart)*xx/duration, yy);
         ctx.stroke();
     
         // draw 5am boxes
         ctx.fillStyle = "#E0E0C0";
-        ctx.fillRect((next5am - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
-        ctx.fillRect((next5am + day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);  //replace
+        ctx.fillRect((next5am + i*day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);  //replace
     
         ctx.fillStyle = 'blue';
-        ctx.fillText("00:00", (midnight - timeStart)*xx/duration - 15, 15);
-        ctx.fillText("00:00", (midnight + day - timeStart)*xx/duration - 15, 15);   //replace
-        ctx.fillText("12:00", (noon - timeStart)*xx/duration - 15, 15);
-        ctx.fillText("12:00", (noon + day - timeStart)*xx/duration - 15, 15);  //replace
+        ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);   //replace
+        ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);  //replace
         ctx.fillStyle = 'brown';
-        ctx.fillText("5:00", (next5am - timeStart)*xx/duration - 7, yy-10);
-        ctx.fillText("5:00", (next5am + day - timeStart)*xx/duration - 7, yy-10);  //replace
+        ctx.fillText("5:00", (next5am + i*day - timeStart)*xx/duration - 7, yy-10);  //replace
+    }
     
     // draw tides, 15 min intervals 
     ctx.beginPath();
