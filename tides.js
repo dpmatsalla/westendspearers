@@ -30,7 +30,7 @@ function nextTide() {
     }
     const next5am = nextTime.getTime();
 
-    var nextDate =  nextTime.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    var nextDate =  nextTime.toLocaleDateString('en-ca', { day: 'numeric', month: 'short' });
     nextTide.innerHTML += 'Conditions ' + nextDate + ' at 5am: ' + tideText(next5am);
         
 }
@@ -118,7 +118,7 @@ function drawCurve() {
 
         ctx.font = "18px Arial";
         nextTime = new Date(noon + i*day);
-        var nextDate =  nextTime.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        var nextDate =  nextTime.toLocaleDateString('en-ca', { day: 'numeric', month: 'short' });
         ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 10);
 
     }
