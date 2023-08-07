@@ -3,13 +3,12 @@ function adjustTides {
     var tideTime;
     for (var i=0; i < tide_list.length; i++) {
         tideTime = Date.parse(tide_list[i].time_local);
-        if (tide_list[i].tide === 'HIGH') { tideTime += 1*3600*1000; }
-        else { tideTime -= 1*3600*1000; }
+        if (tide_list[i].tide === 'HIGH') { tideTime -= 1*3600*1000; }
+        else { tideTime += 1*3600*1000; }
 
         tide_list[i].time_stamp = tideTime;
         tide_list[i].time_local = new Date(tideTime);
     }
-
 }
 
 // Function to group the tide information by date and separate low and high tides
