@@ -21,16 +21,14 @@ function nextTide() {
     const now = currentDate.getTime();
     
     // get next5am timestamp
-    let nextTime = new Date(now);
-    nextTime.setHours(5,0,0,0);   
+    let nextTime = new Date(now).setHours(5,0,0,0);   
     if (nextTime.getTime() <= now) {
         nextTime.setDate(nextTime.getDate() + 1);
     }
     const next5am = nextTime.getTime();
     let nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
-    let nextTime2 = new Date(now);
-    nextTime2.setDate(nextTime.getDate() + 1);
+    let nextTime2 = new Date(now).setDate(nextTime.getDate() + 1);
     let nextDate2 =  nextTime2.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
     nextTide.innerHTML = '<table width="100%"><tr> \
@@ -68,18 +66,15 @@ function drawCurve() {
     const timeEnd = timeStart + duration;
 
     // get next midnight & noon & 5am
-    let nextTime = new Date(timeStart);
-    nextTime.setHours(0, 0, 0, 0);
+    let nextTime = new Date(timeStart).setHours(0, 0, 0, 0);
     nextTime.setDate(nextTime.getDate() + 1);
     const midnight = nextTime.getTime();
-    nextTime = new Date(timeStart);
-    nextTime.setHours(12,0,0,0);   
+    nextTime = new Date(timeStart).setHours(12,0,0,0);   
     if (nextTime.getTime() <= timeStart) {
         nextTime.setDate(nextTime.getDate() + 1);
     }
     const noon = nextTime.getTime();
-    nextTime = new Date(timeStart);
-    nextTime.setHours(5,0,0,0);   
+    nextTime = new Date(timeStart).setHours(5,0,0,0);   
     if (nextTime.getTime() <= timeStart) {
         nextTime.setDate(nextTime.getDate() + 1);
     }
