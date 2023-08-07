@@ -20,16 +20,16 @@ function nextTide() {
     const currentDate = new Date();
     const now = currentDate.getTime();
     
-    nextTide.innerHTML = "
+    nextTide.innerHTML = '
       <table width="100%"><tr>
           <th>Date/Time</th>
           <th>Tide</th>
           <th>Wind</th>
         </tr><tr>
           <td>Now</td>
-          <td>" + tideText(now) + "</td>
+          <td>' + tideText(now) + '</td>
           <td></td>
-        </tr>";
+        </tr>';
 
     // get next5am timestamp
     let nextTime = new Date(now);
