@@ -15,7 +15,7 @@ function formatTime(timestamp) {
     timeZone: 'Australia/Brisbane',
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false, // Set to 24-hour format
+    hour12: false, // Set to 24-hour
   };  
   const formattedTime = new Date(timestamp).toLocaleString('en-US', options);
   return formattedTime;
@@ -70,6 +70,7 @@ function tideHeight(t) {
 function generateCalendar() {
     const tableBody = document.querySelector("#calendar tbody");
     let currentDate = new Date();
+    const now = currentDate.getTime();  //in timestamp
     currentDate.setDate(currentDate.getDate() - currentDate.getDay());  //set to the last Sunday
     
     // Get tides
@@ -87,7 +88,7 @@ function generateCalendar() {
     ];
 
     // Get today's date in "YYYY-MM-DD"
-    const todayDate = new Date().toISOString().split("T")[0];
+    const todayDate = formatDate(now);
 
     // Generate 10 weeks of calendar
     for (let week = 0; week < 10; week++) {
@@ -95,7 +96,7 @@ function generateCalendar() {
 
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
             const cell = document.createElement("td");
-            const cellDate = currentDate.toISOString().split("T")[0]; // Format: "YYYY-MM-DD"
+            const cellDate = formatDate(currentDate.getTime()); // Format: "YYYY-MM-DD"
             cell.textContent = currentDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
     
             // Update tides on this date
