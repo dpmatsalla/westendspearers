@@ -58,13 +58,13 @@ function drawCurve() {
     nextTime.setHours(12,0,0,0);   
     if (nextTime.getTime() <= timeStart) {
         nextTime.setDate(nextTime.getDate() + 1);
-}
+    }
     const noon = nextTime.getTime();
     nextTime = new Date(timeStart);
     nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= timeStart) {
         nextTime.setDate(nextTime.getDate() + 1);
-}
+    }
     const next5am = nextTime.getTime();
 
     ctx.clearRect(0, 0, xx, yy);
