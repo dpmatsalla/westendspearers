@@ -1,5 +1,5 @@
 // convert date & time in Brisbane timezone UTC+10
-function formatDateInBrisbane(timestamp) {
+function formatDate(timestamp) {
   const options = {
     timeZone: 'Australia/Brisbane',
     year: 'numeric',
