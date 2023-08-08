@@ -90,6 +90,7 @@ function generateCalendar() {
                 matchingEvents.forEach(eventInfo => {
                     const eventElement = document.createElement("div");
                     eventElement.textContent = eventInfo.event;
+                    eventElement.classList.add("tide");
                     eventsContainer.appendChild(eventElement);
                 });
                 cell.appendChild(eventsContainer);
@@ -102,7 +103,6 @@ function generateCalendar() {
                 matchingEvents.forEach(eventInfo => {
                     const eventElement = document.createElement("div");
                     eventElement.textContent = eventInfo.event;
-                    eventElement.classList.add("tide");
                     eventsContainer.appendChild(eventElement);
                 });
                 cell.appendChild(eventsContainer);
