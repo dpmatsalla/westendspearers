@@ -1,4 +1,5 @@
-// 
+// METAR: https://tgftp.nws.noaa.gov/data/observations/metar/stations/YBBN.TXT
+// TAF: https://tgftp.nws.noaa.gov/data/forecasts/taf/stations/YBBN.TXT
 
 function getForecastedWinds(tafMessage, targetTime) {
     const tafLines = tafMessage.split('\n');
