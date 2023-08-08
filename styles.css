@@ -1,6 +1,7 @@
 canvas {
     border: 1px solid #000000;
     background-color: beige;
+    display:block;  /* To remove the scrollbars */
 }
 #map {
     width: 100%;
