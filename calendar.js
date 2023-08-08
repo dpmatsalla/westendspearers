@@ -90,7 +90,8 @@ function generateCalendar() {
                 matchingEvents.forEach(eventInfo => {
                     const eventElement = document.createElement("div");
                     eventElement.textContent = eventInfo.event;
-                    eventElement.classList.add("tide");
+                    if (eventInfo.event.includes('↑')) { eventElement.classList.add('hightide'); }
+                    else { eventElement.classList.add('lowtide'); }
                     eventsContainer.appendChild(eventElement);
                 });
                 cell.appendChild(eventsContainer);
