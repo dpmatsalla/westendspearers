@@ -71,17 +71,6 @@ function generateCalendar() {
     // Get tides
     const tides = groupTidesByDate(); // { date: "2023-08-01), event: "5:21: LOW 0.21 m" }
     
-    // List of events
-    const events = [
-        { date: "2023-08-16", event: "EKKA" },
-        { date: "2023-08-18", event: "Cheese" },
-        { date: "2023-10-31", event: "Halloween" },
-        { date: "2023-11-10", event: "AGM" },
-        { date: "2023-11-11", event: "AGM" },
-        { date: "2023-12-25", event: "Merry Christmas!" },
-        // Add more events here...
-    ];
-
     // Get today's date in "YYYY-MM-DD"
     const todayDate = formatDate(now);
 
