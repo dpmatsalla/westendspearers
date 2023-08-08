@@ -43,7 +43,7 @@ function groupTidesByDate() {
         if (tide.tide == 'HIGH') { tideStr = "↑"; }
         else { tideStr = "↓"; }
    
-        tidesByDate.push({ date: dateStr, event: timeStr+" "+tideStr+" "+tide.height+"m" });
+        tidesByDate.push({ date: dateStr, event: timeStr+" "+tideStr+" "+tide.height.toFixed(2)+"m" });
     });
     return tidesByDate;
 }
