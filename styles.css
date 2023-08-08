@@ -63,6 +63,7 @@ td {
   color: #fff000;
 }
 .calendar .tide {
+  font-size: 7px;
   color: green;
 }
 .calendar .today {
