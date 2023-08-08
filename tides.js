@@ -56,7 +56,6 @@ function nextTide() {
 function drawCurve() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    ctx.width = 400;
     const amp = 80; // amplitude
     const xx = canvas.width;
     const yy = canvas.height;
