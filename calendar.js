@@ -42,13 +42,8 @@ function groupTidesByDate() {
         var timeStr = formatTime(tide.timestamp);
         if (tide.tide == 'HIGH') { tideStr = "↑"; }
         else { tideStr = "↓"; }
-        //if (!tidesByDate[dateStr]) {
-        //    tidesByDate[dateStr] = { 'types': [], 'times': [], 'heights': [] };
-        //}
-        //tidesByDate[dateStr].types.push(tide.tide);
-        //tidesByDate[dateStr].times.push(timeStr);
-        //tidesByDate[dateStr].heights.push(tide.height);
-        tidesByDate.push({ date: dateStr, event: timeStr+": "+tideStr+" "+tide.height+"m" });
+   
+        tidesByDate.push({ date: dateStr, event: timeStr+" "+tideStr+" "+tide.height+"m" });
     });
     return tidesByDate;
 }
