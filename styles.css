@@ -3,17 +3,9 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
 }
-.canvas-container {
-    max-width: 360; /* Prevent horizontal scrollbar */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 240;
-}
 canvas {
     border: 1px solid #000000;
     background-color: beige;
-    width: 100vw; 
     display:block;  /* To remove the scrollbars */
 }
 #map {
