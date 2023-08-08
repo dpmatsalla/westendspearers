@@ -62,6 +62,9 @@ td {
   background-color: darkblue;
   color: #fff000;
 }
+.calendar .tide {
+  color: green;
+}
 .calendar .today {
   font-weight: bold;
   color: red;
