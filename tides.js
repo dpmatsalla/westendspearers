@@ -33,7 +33,7 @@ function nextTide() {
     nextTime2.setDate(nextTime.getDate() + 1);
     let nextDate2 =  nextTime2.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
 
-    nextTide.innerHTML = formatDate(now)+', '+formatTime(now)+'<br><table width="100%"><tr> \
+    nextTide.innerHTML = '<table width="100%"><tr> \
           <th>Date/Time</th> \
           <th>Tide</th> \
           <th>Wind</th> \
