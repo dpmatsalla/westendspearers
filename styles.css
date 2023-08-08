@@ -45,7 +45,13 @@ td {
   border: 2px solid blue;
   background-color: beige;
 }
-.calendar th, .calendar td {
+.calendar th {
+  border: 1px solid gray;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px;
+}
+.calendar td {
   border: 1px solid gray;
   font-size: 7px;
   vertical-align: top;
@@ -54,7 +60,6 @@ td {
 }
 .calendar thead {
   background-color: darkblue;
-  font-size: 18px;
   color: #fff000;
 }
 .calendar .today {
