@@ -64,7 +64,8 @@ function drawCurve() {
     const currentDate = new Date();
     const now = currentDate.getTime();
     const timeStart = now - 6*3600*1000;  //6hrs ago
-    const duration = 8*day;
+    const days = 10;
+    const duration = days*day;
     const timeEnd = timeStart + duration;
 
     // get next midnight & noon & 5am
@@ -105,7 +106,7 @@ function drawCurve() {
     ctx.fillStyle = 'red';
     ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/5);
 
-    for (var i=0; i<8; i++) {
+    for (var i=0; i<days; i++) {
         // draw midnight vertical lines
         ctx.beginPath();
         ctx.strokeStyle = "blue";
