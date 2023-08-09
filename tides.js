@@ -129,7 +129,7 @@ function drawCurve() {
         // text
         ctx.font = "12px Arial";
         ctx.fillStyle = 'brown';
-        ctx.fillText("5-6am", (next5am + i*day - timeStart)*xx/duration - 15, 15);
+        ctx.fillText("5-6am", (next5am + i*day - timeStart)*xx/duration - 13, 15);
         ctx.fillStyle = 'blue';
         ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);
         ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);
