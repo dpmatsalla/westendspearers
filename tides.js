@@ -150,7 +150,7 @@ function drawCurve() {
         ctx.font = "18px Arial";
         nextTime = new Date(noon + i*day);
         var nextDate =  formatDay(nextTime);
-        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 10);
+        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 35, yy - 10);
 
     }
     
