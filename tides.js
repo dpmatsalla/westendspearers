@@ -21,6 +21,7 @@ function nextTide() {
     const now = currentDate.getTime();
     
     // get next5am timestamp
+    // loop thru multiple days
     let nextTime = new Date(now);
     nextTime.setHours(5,0,0,0);   
     if (nextTime.getTime() <= now) {
