@@ -7,7 +7,7 @@ function plotMap(data) {
             color: 'blue',
             opacity: 1.0,
             weight: 3,
-            popup = activity.name + "<br>Dist = " + activity.distance/1000 + " m"
+            popup = activity.name + '<br>Dist = ' + activity.distance + ' m'
         }).addTo(map);
     });
     return;
