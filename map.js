@@ -1,3 +1,17 @@
+function plotMap(data) {
+    var activity = data[0];
+    data.forEach(activity => {
+        var type = activity.type;
+        var polylinePoints = L.Polyline.fromEncoded(activity.map.summary_polyline).getLatLngs();
+        var polyline = L.polyline(polylinePoints, {
+            color: 'blue',
+            opacity: 1.0,
+            weight: 3
+        }).addTo(map);
+    });
+    return;
+}
+
 // Initialize the map centered on Brisbane
 var map = L.map('map').setView([ -27.488299, 152.996411], 14);
 
@@ -13,3 +27,5 @@ var mercedesMarker = L.marker([-27.441405, 153.043811]).addTo(map);
 orleighParkMarker.bindPopup("<b>Orleigh Park</b>").openPopup();
 rockMarker.bindPopup("<b><a href='https://goo.gl/maps/sdDeoHEhbGUynhx58'>The Rock</a></b>");
 mercedesMarker.bindPopup("<b>Breakfast Creek</b>");
+
+plotMap(data);
