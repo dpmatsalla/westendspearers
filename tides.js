@@ -1,3 +1,14 @@
+function formatDay(date) {
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+
+  return `${dayOfWeek} ${day} ${month}`;
+}
+
 function tideText(t) {
     let t1 = tideHeight(t);
     let t0 = tideHeight(t - 1*3600*1000);
@@ -28,11 +39,11 @@ function nextTide() {
         nextTime.setDate(nextTime.getDate() + 1);
     }
     const next5am = nextTime.getTime();
-    let nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    let nextDate =  formatDay(nextTime);
 
     let nextTime2 = new Date(now);
     nextTime2.setDate(nextTime.getDate() + 1);
-    let nextDate2 =  nextTime2.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+    let nextDate2 =  formatDay(nextTime2);
 
     nextTide.innerHTML = '<table width="100%"><tr> \
           <th>Date/Time</th> \
@@ -138,7 +149,7 @@ function drawCurve() {
 
         ctx.font = "18px Arial";
         nextTime = new Date(noon + i*day);
-        var nextDate =  nextTime.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+        var nextDate =  formatDay(nextTime);
         ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 30, yy - 10);
 
     }
