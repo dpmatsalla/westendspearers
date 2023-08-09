@@ -6,7 +6,8 @@ function plotMap(data) {
         var polyline = L.polyline(polylinePoints, {
             color: 'blue',
             opacity: 1.0,
-            weight: 3
+            weight: 3,
+            popup = activity.name + "<br>Dist = " + activity.distance/1000 + " m"
         }).addTo(map);
     });
     return;
