@@ -4,10 +4,17 @@ body,html {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
 }
+.container {
+    width: 355px;
+    height: 250px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
 canvas {
+    width: 800px;
+    height: 240px;
     border: 1px solid #000000;
     background-color: beige;
-    display:block;  /* To remove the scrollbars */
 }
 #map {
     width: 100%;
