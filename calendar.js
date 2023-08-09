@@ -26,8 +26,8 @@ function adjustTides() {
     var tideTime;
     for (var i=0; i < tide_list.length; i++) {
         tideTime = Date.parse(tide_list[i].time_local);
-        if (tide_list[i].tide === 'HIGH') { tideTime -= 0.75*3600*1000; }
-        else { tideTime += 0.75*3600*1000; }
+        if (tide_list[i].tide === 'HIGH') { tideTime -= 0.5*3600*1000; }
+        else { tideTime += 0.5*3600*1000; }
 
         tide_list[i].timestamp = tideTime;
         tide_list[i].time_local = new Date(tideTime).toISOString();
