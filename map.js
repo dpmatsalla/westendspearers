@@ -7,7 +7,7 @@ function plotMap(data) {
             color: 'blue',
             opacity: 1.0,
             weight: 3
-        }).bindPopup(activity.name + '<br>Dist = ' + activity.distance + ' m').addTo(map);
+        }).bindPopup('<b>' + activity.name + '</b><br>Dist = ' + activity.distance + ' m').addTo(map);
     });
     return;
 }
