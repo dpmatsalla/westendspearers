@@ -10,17 +10,17 @@ function formatDay(date) {
 }
 
 function tideText(t) {
-    let t1 = tideHeight(t);
+    let t1 = tideHeight(t + 0.5*3600*1000);
     let t0 = tideHeight(t - 1*3600*1000);
-    let t2 = tideHeight(t + 1*3600*1000);
+    let t2 = tideHeight(t + 1.5*3600*1000);
     let text = t1.toFixed(1) + ' m ';
 
     if (t1 > t0) {
         if (t2 > t1) {text += 'incoming';}
-        else {text += 'high neutral';}
+        else {text += '↑ neutral';}
     } else {
         if (t2 < t1) {text += 'outgoing';}
-        else {text += 'low neutral';}
+        else {text += '↓ neutral';}
     }
     return text;
 }
