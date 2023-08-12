@@ -43,10 +43,6 @@ canvas {
 .author img {
   height: 80px;
 }
-table {
-    width: 100%;
-    table-layout: fixed;
-}
 td {
     border: none;
     font-size: 14px;
@@ -55,6 +51,7 @@ td {
 .calendar {
   border-collapse: collapse;
   width: 100%;
+  table-layout:fixed;
   border: 2px solid blue;
   background-color: beige;
 }
