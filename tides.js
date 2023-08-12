@@ -1,3 +1,7 @@
+// Incorporate historical heights of brisbane river in the horizontal graph
+// http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.tbl.shtml
+// http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.plt.shtml
+
 function formatDay(date) {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -45,21 +49,29 @@ function nextTide() {
     nextTime2.setDate(nextTime.getDate() + 1);
     let nextDate2 =  formatDay(nextTime2);
 
-    nextTide.innerHTML = '<table width="100%"><tr> \
+    nextTide.innerHTML = '<table><tr> \
           <th>Date/Time</th> \
           <th>Tide</th> \
           <th>Wind</th> \
+          <th>Sunrise/sunset</th> \
+          <th>Temp</th> \
         </tr><tr> \
           <td>Now</td> \
           <td>' + tideText(now) + '</td> \
+          <td></td> \
+          <td></td> \
           <td></td> \
         </tr><tr> \
           <td>' + nextDate + ', 5am</td> \
           <td>' + tideText(next5am) + '</td> \
           <td></td> \
+          <td></td> \
+          <td></td> \
         </tr><tr> \
           <td>' + nextDate2 + ', 5am</td> \
           <td>' + tideText(next5am + day) + '</td> \
+          <td></td> \
+          <td></td> \
           <td></td> \
       </tr></table>';
         
