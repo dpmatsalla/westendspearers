@@ -53,8 +53,8 @@ function nextTide() {
           <th>Date/Time</th> \
           <th>Tide</th> \
           <th>Wind</th> \
-          <th>Sunrise/sunset</th> \
           <th>Temp</th> \
+          <th>Sunrise</th> \
         </tr><tr> \
           <td>Now</td> \
           <td>' + tideText(now) + '</td> \
