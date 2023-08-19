@@ -1,56 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="keywords" content="West End, Spearers, kayak, canoe, surfski, Brisbane">
-    <meta name="description" content="West End Spearers Kayak Group">
-    <meta name="author" content="Devon Matsalla">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta name='keywords' content='West End, Spearers, kayak, canoe, surfski, Brisbane'>
+    <meta name='description' content='West End Spearers Kayak Group'>
+    <meta name='author' content='Devon Matsalla'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>West End Spearers Kayaking Club</title>
-    <link rel="icon" type="image/x-icon" href="spearers.png">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/polyline-encoded@0.0.9/Polyline.encoded.min.js"></script>
+    <link rel='icon' type='image/x-icon' href='spearers.png'>
+    <link rel='stylesheet' type='text/css' href='styles.css'>
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
+    <script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/polyline-encoded@0.0.9/Polyline.encoded.min.js'></script>
+    <style>
+        .picture {
+          max-height: 300px;
+          max-width: 100%;
+          flex-shrink: 1;
+          margin-right: 3px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navigation">
-            <table style="width:100%;"><tr>
+        <nav class='navigation'>
+            <table style='width:100%;'><tr>
                 <th>
-                    <div class="logo">
-                        <img src="spearers.png" alt="Logo" height="200">
-                    </div>
-                </th><th>
-                    <div class="title">
-                        <h1>West End Spearers</h1>
-                        <!--   <h2>Subtitle</h2>  -->
-                    </div>
-                </th><th>
-                    <div class="author">
-                        <img src="spearers.png" alt="Logo" height="200">
+                    <div class='title'>
+                        <img src='spearerslogo.png' alt='Logo' height='100'>
                     </div>
                 </th>
             </tr></table>
         </nav>
+        <table class='calendar' style='table-layout: auto;'><thead><tr>
+            <th><a href='index.php#home' style='color:yellow;'>Home</a> </th>
+            <th><a href='index.php#tides' style='color:yellow;'>Tides</a> </th>
+            <th><a href='index.php#calendarsection' style='color:yellow;'>Calendar</a> </th>
+            <th><a href='cheese.html' style='color:yellow;'>Cheese</a> </th>
+            <th><a href='index.php#map' style='color:yellow;'>Map</a> </th>
+            <th><a href='index.php#links' style='color:yellow;'>Links</a></th>
+            <th><a href='index.php#contact' style='color:yellow;'>Contact</a> </th>
+        </tr></thead></table>
     </header>
     
     <main>
-        <img src="BrisbaneRiver.jpg" style="max-width: 100%">
-        <!-- <table class="calendar"><thead><tr>
-            <th><a href="#home">Home</a> </th>
-            <th><a href="#tides">Tides & Weather</a> </th>
-            <th><a href="#calendarsection">Calendar</a> </th>
-            <th><a href="#cheese">Cheese</a> </th>
-            <th><a href="#members">Members</a> </th>
-            <th><a href="#map">Map</a> </th>
-            <th><a href="#links">Links</a></th>
-            <th><a href="#contact">Contact Us</a> </th>
-        </tr></thead></table>  -->
-        
-        <section id="home">
+        <img src='BrisbaneRiver.jpg' style='max-width: 100%'>
+
+        <section id='cheese'>
+            <table width='100%'><tr>
+                <td style='text-align:left;'><h2>The Cheese</h2></td>
+                <td style='text-align:center;'><img class='picture' src='cheese/cheese.jpg' style='max-height:200px;'></td>
+                <td style='text-align:right;'><h2>The Cheese</h2></td>
+            </tr></table>
+            <h3>Some Winners:</h3>
+            <table style='width:100%;border-collapse:collapse;'><tr>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0016.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0017.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0018.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0019.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0025.jpg'></td>
+            </tr></table>
+            <table style='width:100%;border-collapse:collapse;'><tr>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0005.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0006.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0010.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0012.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230817-WA0013.jpg'></td>
+            </tr></table>
+            <table style='width:100%;border-collapse:collapse;'><tr>
+                <td><img class='picture' src='cheese/IMG-20221223-WA0004.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230317-WA0000.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230501-WA0000.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20230721-WA0002.jpg'></td>
+                <td><img class='picture' src='cheese/IMG-20221111-WA0009.jpg'></td>
+            </tr></table>
+        </section>
+        <hr>
+        <section id='athletes'>
+            <h2>Athletes</h2>
+            <table>
+              <tr>
+                <th>Athlete</th><th>Handicap</th><th>Comment</th>
+              </tr><tr>
+                <td>Clive</td><td>1.0</td><td></td>
+              </tr><tr>
+                <td>Simon T</td><td>1.0</td><td>Original</td>
+              </tr><tr>
+                <td>John S</td><td>2.0</td><td></td>
+              </tr><tr>
+                <td>Monty</td><td>2.0</td><td>Original</td>
+              </tr><tr>
+                <td>Tony</td><td>2.0</td><td></td>
+              </tr><tr>
+                <td>Frans</td><td>2.5</td><td></td>
+              </tr><tr>
+                <td>Piet</td><td>3.0</td><td></td>
+              </tr><tr>
+                <td>Jannie</td><td>3.0</td><td></td>
+              </tr><tr>
+                <td>James</td><td>3.0</td><td>Original, Timelord</td>
+              </tr><tr>
+                <td>Simon D</td><td>3.5</td><td></td>
+              </tr><tr>
+                <td>Steve</td><td>3.5</td><td></td>
+              </tr><tr>
+                <td>Devon</td><td>4.0</td><td></td>
+              </tr><tr>
+                <td>Luke</td><td>4.5</td><td></td>
+              </tr><tr>
+                <td>Aaron</td><td>5.0</td><td></td>
+              </tr><tr>
+                <td>Dave L</td><td>5.0</td><td></td>
+              </tr><tr>
+                <td>Dave B</td><td>5.0</td><td>Foxy</td>
+              </tr><tr>
+                <td>Peter I</td><td>6.0</td><td></td>
+              </tr>
+            </table>
+        </section>
+        <hr>
+        <section id='commandments'>
+            <h2>The 10 Commandments of the Cheese</h2>
+            <center><img src="https://qph.cf2.quoracdn.net/main-qimg-222d3d41c39053f89225d5bc1eaaf19d-lq" height="200"></center>
+            <ol type='1' style="font-size:18px;">
+                <li>Thou shalt not take thy brother's car park</li>
+                <li>Thou shalt not tell thy brother where to paddle</li>
+                <li>Thou shalt shut the F up while paddling</li>
+                <li>Thou shalt turn up for coffee after paddling</li>
+                <li>Thou shalt attend the AGM</li>
+                <li>Thou shalt not covet thy neighbour's boat</li>
+                <li>Thou shalt not covet thy neighbour's paddle</li>
+                <li>Thou shalt not use a leaf-blower at 4 am</li>
+                <li>Thou shalt prioritise the cheese above all else in thy life</li>
+                <li>There are no rules in the cheese...  win at all cost!</li>
+            </ol>
+        </section>
+        <hr>
+        <section id='rules'>
             <h2>Spearers Cheese Rules & Disclaimer</h2>
-            <ol type="1">
+            <ol type='1'>
                 <li>The Cheese is called by the Timelord for any Friday he/she decides.</li>
                 <li>The Cheese is a handicap race with times decided and posted by the Timelord (discussion is encouraged on times but will be totally at the discretion of the Timelord).</li>
                 <li>All Spearers can encourage the Timelord to call a cheese if the Timelord is not doing his/her job (such as realising there is an encouraging high tide on any given Friday being perfect for a Cheese).</li>
@@ -70,8 +158,7 @@
                 </ol>
             <h2>Disclaimer</h2>
             <p>Participating in The Cheese exposes the participant to inherent risks and dangers associated with paddling and water-based activities. While The Spearers have taken reasonable precautions to ensure the safety of all participants, it is important to acknowledge and understand the potential risks involved. By agreeing to compete in a Cheese race, all participating Spearers agree to the following terms and conditions:</p>
-                <br>
-            <ol type="1">
+            <ol type='1'>
                 <li>Assumption of Risk: <br>
                 I am aware that participating in a Cheese race involves risks such as capsizing, collisions, exposure to adverse weather conditions, rowers, tinnies, Citycats and other hazards associated with paddling on the Brisbane River. By competing in a Cheese Race, I understand that these risks cannot be completely eliminated.</li>
                 <li>Physical Fitness and Health: <br>
@@ -89,10 +176,27 @@
                 <li>Emergency Medical Treatment: <br>
                 In the event of a medical emergency, I authorize the Spearers to seek and provide medical treatment as deemed necessary and I will be responsible for any medical expenses incurred.</li>
             </ol>
-            <br>
-            <p>By choosing to race the Cheese, I confirm that I have read and understood this disclaimer and fully accept its terms. I acknowledge that by agreeing to participate in the Cheese race that it is purely voluntary, and I assume all risks associated with my participation. I agree that this disclaimer will be binding upon my heirs, assigns, and legal representatives.
-            </p>
+            <p>By choosing to race the Cheese, I confirm that I have read and understood this disclaimer and fully accept its terms. I acknowledge that by agreeing to participate in the Cheese race that it is purely voluntary, and I assume all risks associated with my participation. I agree that this disclaimer will be binding upon my heirs, assigns, and legal representatives.</p>
         </section>
     </main>
+    
+    <footer>
+        <table style='width:100%;border-collapse:collapse;'><tr>
+            <td><img class='picture' src='cheese/cheese2.jpg'></td>
+            <td><img class='picture' src='cheese/cheese3.jpg'></td>
+            <td><img class='picture' src='cheese/cheese4.jpg'></td>
+        </tr></table>
+        <table class='calendar' style='table-layout: auto;'><thead><tr>
+            <th><a href='index.php#home' style='color:yellow;'>Home</a> </th>
+            <th><a href='index.php#tides' style='color:yellow;'>Tides</a> </th>
+            <th><a href='index.php#calendarsection' style='color:yellow;'>Calendar</a> </th>
+            <th><a href='cheese.html' style='color:yellow;'>Cheese</a> </th>
+            <th><a href='index.php#map' style='color:yellow;'>Map</a> </th>
+            <th><a href='index.php#links' style='color:yellow;'>Links</a></th>
+            <th><a href='index.php#contact' style='color:yellow;'>Contact</a> </th>
+        </tr></thead></table>
+        <p>&copy; 2023 The Spearers Kayaking Club. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
