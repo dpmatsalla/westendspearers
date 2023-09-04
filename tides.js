@@ -1,56 +1,47 @@
-// Incorporate historical heights of brisbane river in the horizontal graph
-// http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.tbl.shtml
-// http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.plt.shtml
+function tidesTable() {
+    
+    const zeroPad = (num, places) => String(num).padStart(places, '0');
 
-function formatDay(date) {
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let windNow = zeroPad(windDirNow,3) + 'º ' + String(windSpeedNow) + 'kts';
 
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const month = months[date.getMonth()];
-  const day = date.getDate();
-
-  return `${dayOfWeek} ${day} ${month}`;
-}
-
-function tideText(t) {
-    let t1 = tideHeight(t + 0.5*3600*1000);
-    let t0 = tideHeight(t - 1*3600*1000);
-    let t2 = tideHeight(t + 1.5*3600*1000);
-    let text = t1.toFixed(1) + ' m ';
-
-    if (t1 > t0) {
-        if (t2 > t1) {text += 'incoming';}
-        else {text += '↑ neutral';}
-    } else {
-        if (t2 < t1) {text += 'outgoing';}
-        else {text += '↓ neutral';}
-    }
-    return text;
-}
-
-function nextTide() {
     let nextTide = document.getElementById('nextTide');
     const day = 24*3600*1000;
     const currentDate = new Date();
     const now = currentDate.getTime();
     
     // get next5am timestamp
-    // loop thru multiple days
     let nextTime = new Date(now);
     nextTime.setHours(5,0,0,0);   
-    if (nextTime.getTime() <= now) {
-        nextTime.setDate(nextTime.getDate() + 1);
+    let next5am = nextTime.getTime();
+    if (next5am <= now) {
+        next5am += day;
     }
-    const next5am = nextTime.getTime();
-    let nextDate =  formatDay(nextTime);
+    
+    //find where 5am is in the forecast array
+    var i5am=0, d=0;
+    while(d < next5am) {
+        d = new Date(forecast.hourly.time[i5am]).getTime();
+        i5am++;
+    }
 
-    let nextTime2 = new Date(now);
-    nextTime2.setDate(nextTime.getDate() + 1);
-    let nextDate2 =  formatDay(nextTime2);
+    const temp24h = Math.round(forecast.hourly.temperature_2m[i5am]) + 'ºC';
+    const temp48h = Math.round(forecast.hourly.temperature_2m[i5am+24]) + 'ºC';
+    const winds24h = zeroPad(Math.round(forecast.hourly.winddirection_10m[i5am]/10)*10, 3) + 'º ' + Math.round(forecast.hourly.windspeed_10m[i5am]) + 'kts';
+    const winds48h = zeroPad(Math.round(forecast.hourly.winddirection_10m[i5am+24]/10)*10, 3) + 'º ' + Math.round(forecast.hourly.windspeed_10m[i5am+24]) + 'kts';
+
+    const brisbane = [-27.4698, 153.0251]; // Latitude and Longitude of Brisbane
+    var times = SunCalc.getTimes(currentDate, ...brisbane);
+    const sunrise1 = times.sunrise;
+    const sunriseFormat1 = sunrise1.toLocaleTimeString('en-US', { timeZone: 'Australia/Brisbane', hour: 'numeric', minute: 'numeric' });
+    times = SunCalc.getTimes(new Date(next5am), ...brisbane);
+    const sunrise2 = times.sunrise;
+    const sunriseFormat2 = sunrise2.toLocaleTimeString('en-US', { timeZone: 'Australia/Brisbane', hour: 'numeric', minute: 'numeric' });
+    times = SunCalc.getTimes(new Date(next5am + day), ...brisbane);
+    const sunrise3 = times.sunrise;
+    const sunriseFormat3 = sunrise3.toLocaleTimeString('en-US', { timeZone: 'Australia/Brisbane', hour: 'numeric', minute: 'numeric' });
 
     nextTide.innerHTML = '<table><tr> \
-          <th>Date/Time</th> \
+          <th>Date</th> \
           <th>Tide</th> \
           <th>Wind</th> \
           <th>Temp</th> \
@@ -58,23 +49,22 @@ function nextTide() {
         </tr><tr> \
           <td>Now</td> \
           <td>' + tideText(now) + '</td> \
-          <td></td> \
-          <td></td> \
-          <td></td> \
+          <td>' + windNow + '</td> \
+          <td>' + tempNow + '</td> \
+          <td>' + sunriseFormat1 + '</td> \
         </tr><tr> \
-          <td>' + nextDate + ', 5am</td> \
+          <td>' + formatDay(next5am) + '</td> \
           <td>' + tideText(next5am) + '</td> \
-          <td></td> \
-          <td></td> \
-          <td></td> \
+          <td>' + winds24h + '</td> \
+          <td>' + temp24h + '</td> \
+          <td>' + sunriseFormat2 + '</td> \
         </tr><tr> \
-          <td>' + nextDate2 + ', 5am</td> \
+          <td>' + formatDay(next5am + day) + '</td> \
           <td>' + tideText(next5am + day) + '</td> \
-          <td></td> \
-          <td></td> \
-          <td></td> \
+          <td>' + winds48h + '</td> \
+          <td>' + temp48h + '</td> \
+          <td>' + sunriseFormat3 + '</td> \
       </tr></table>';
-        
 }
 
 function drawCurve() {
@@ -87,30 +77,68 @@ function drawCurve() {
     const day = 24*3600*1000;
     const currentDate = new Date();
     const now = currentDate.getTime();
-    const timeStart = now - 6*3600*1000;  //6hrs ago
-    const days = 10;
+    const timeStart = now - 7*day;  //1 week ago
+    const days = 20;
     const duration = days*day;
     const timeEnd = timeStart + duration;
 
     // get next midnight & noon & 5am
     let nextTime = new Date(timeStart);
     nextTime.setHours(0, 0, 0, 0);
-    nextTime.setDate(nextTime.getDate() + 1);
-    const midnight = nextTime.getTime();
+    const midnight = nextTime.getTime() + day;
     nextTime = new Date(timeStart);
-    nextTime.setHours(12,0,0,0);   
-    if (nextTime.getTime() <= timeStart) {
-        nextTime.setDate(nextTime.getDate() + 1);
+    nextTime.setHours(12,0,0,0);
+    let noon = nextTime.getTime();
+    if (noon <= timeStart) {
+        noon += day;
     }
-    const noon = nextTime.getTime();
     nextTime = new Date(timeStart);
     nextTime.setHours(5,0,0,0);   
-    if (nextTime.getTime() <= timeStart) {
-        nextTime.setDate(nextTime.getDate() + 1);
+    let next5am = nextTime.getTime();
+    if (next5am <= timeStart) {
+        next5am += day;
     }
-    const next5am = nextTime.getTime();
+    
+    ctx.clearRect(0, 0, xx, yy);   //clear canvas
 
-    ctx.clearRect(0, 0, xx, yy);
+    //draw day and night
+    const brisbane = [-27.4698, 153.0251]; // Latitude and Longitude of Brisbane
+    nextTime.setDate(nextTime.getDate() - 1);
+    var times = SunCalc.getTimes(nextTime, ...brisbane);
+    var sunset1 = times.sunset.getTime();
+    for (var i=0; i<=days; i++) {
+        nextTime.setDate(nextTime.getDate() + 1);
+        times = SunCalc.getTimes(nextTime, ...brisbane);
+        var sunrise = times.sunrise;
+        var sunrise2 = sunrise.getTime();
+        var sunset2 = times.sunset.getTime();
+        ctx.fillStyle = "#B0B090"; //night
+        ctx.fillRect((sunset1 - timeStart)*xx/duration, 0, (sunrise2 - sunset1)*xx/duration, yy);
+        ctx.fillStyle = "#f5f5dc"; //day
+        ctx.fillRect((sunrise2 - timeStart)*xx/duration, 0, (sunset2 - sunrise2)*xx/duration, yy);
+
+        // draw 5-6am paddling boxes
+        if (sunrise.getHours() >= 6) {
+            ctx.fillStyle = "#009000";  // night paddle
+        } else if (sunrise.getHours() < 5) {
+            ctx.fillStyle = "#7CFC00";  // daylight paddle
+        } else {
+            ctx.fillStyle = "#FFA07A";  // sunrise paddle
+        }
+        let x = next5am + (i-1)*day; //start at 5am
+        let y = tideHeight(x);
+        ctx.beginPath();
+        ctx.moveTo((x - timeStart)*xx/duration, 0);
+        ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
+        x += 1*3600*1000;           //add an hour to 6am
+        y = tideHeight(x);
+        ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
+        ctx.lineTo((x - timeStart)*xx/duration, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        sunset1 = sunset2;
+    }
 
     // draw horizontal lines 
     ctx.beginPath();
@@ -128,13 +156,19 @@ function drawCurve() {
     ctx.fillText("1 m", 5, yy - amp +18);
     ctx.font = "12px Arial";
     ctx.fillStyle = 'red';
+    //ctx.save();
+    //ctx.translate((now - timeStart)*xx/duration - 12, yy/5);
+    //ctx.rotate(Math.PI/2);
     ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/5);
+    //ctx.rotate(-Math.PI/2);
+    //ctx.translate(-(now - timeStart)*xx/duration + 12, -yy/5);
+    //ctx.save();
 
     for (var i=0; i<days; i++) {
         // draw midnight vertical lines
         ctx.beginPath();
         ctx.strokeStyle = "blue";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         ctx.moveTo((midnight + i*day - timeStart)*xx/duration, yy - 3*amp);  //replace
         ctx.lineTo((midnight + i*day - timeStart)*xx/duration, yy);
         ctx.stroke();
@@ -147,33 +181,43 @@ function drawCurve() {
         ctx.lineTo((noon + i*day - timeStart)*xx/duration, yy);
         ctx.stroke();
     
-        // draw 5am boxes
-        ctx.fillStyle = "#E0E0C0";
-        ctx.fillRect((next5am + i*day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
-
         // text
-        ctx.font = "12px Arial";
-        ctx.fillStyle = 'brown';
+        ctx.font = "bold 12px Arial";
+        ctx.fillStyle = 'black';
         ctx.fillText("5-6am", (next5am + i*day - timeStart)*xx/duration - 13, 15);
+        ctx.font = "12px Arial";
         ctx.fillStyle = 'blue';
         ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);
         ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);
 
         ctx.font = "18px Arial";
-        nextTime = new Date(noon + i*day);
-        var nextDate =  formatDay(nextTime);
+        var nextDate = formatDay(noon + i*day);
         ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 40, yy - 10);
-
     }
     
-    // draw tides, 15 min intervals 
+    // draw predicted tides, 15 min intervals 
     ctx.beginPath();
     for (let x = timeStart; x < timeEnd; x += 0.25*3600*1000) {
-      const y = amp*tideHeight(x);
-      ctx.lineTo((x - timeStart)*xx/duration, yy - y);
+        let y = tideHeight(x);
+        ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
     }
     ctx.strokeStyle = '#000000';
     ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // draw historical tides, 15 min intervals 
+    ctx.beginPath();
+    let x = timeStart;
+    let r = 0;
+    while (r < riverData.length) {
+        x = riverData[r][0]*1000;
+        y = parseFloat(riverData[r][1]) + 1;
+        ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
+        r++;
+    }
+    ctx.strokeStyle = 'blue';
+    ctx.setLineDash([2,1]);
+    ctx.lineWidth = 4;
     ctx.stroke();
 
     // draw now line
@@ -181,9 +225,12 @@ function drawCurve() {
     ctx.moveTo((now - timeStart)*xx/duration, yy);
     ctx.lineTo((now - timeStart)*xx/duration, yy - 3*amp);
     ctx.strokeStyle = "red";
+    ctx.setLineDash([]);
     ctx.lineWidth = 4;
     ctx.stroke();
+    
+    //adjust scrollbar
+    document.getElementById('canvasScroll').scrollLeft = 3600 * 6.75 / 20;
 }
-
-nextTide();
+tidesTable();
 drawCurve();

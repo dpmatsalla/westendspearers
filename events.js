@@ -9,7 +9,7 @@ const events = [
     { date: "2024-01-01", event: "New Year" },
     { date: "2024-01-26", event: "Aussie Day" },
     { date: "2024-02-14", event: "Valentine" },
-    { date: "2024-03-17", event: "St-Padddy" },
+    { date: "2024-03-17", event: "St-Paddy" },
     { date: "2024-03-29", event: "Good Friday" },
     { date: "2024-04-01", event: "Easter Monday" },
     { date: "2024-04-25", event: "Anzac Day" },

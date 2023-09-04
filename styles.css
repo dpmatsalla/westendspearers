@@ -44,7 +44,7 @@ td {
   border-collapse: collapse;
   width: 100%;
   border: 2px solid blue;
-  background-color: beige;
+  /* background-color: #F5F5DC; */
 }
 .calendar th {
   border: 1px solid gray;
@@ -79,6 +79,18 @@ td {
   font-weight: bold;
   background-color: yellow;
   color: red;
+}
+.calendar .goodday {
+  background-color: cyan;
+}
+.calendar .daypaddle {
+  background-color: #F5F5DC;
+}
+.calendar .nightpaddle {
+  background-color: #D0D0A8;
+}
+.calendar .dawnpaddle {
+  background-color: #FFB08A;
 }
 .content {
   background-color: darkgreen;

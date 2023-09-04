@@ -1,8 +1,14 @@
 <!--
-include sunrise data in the graphic and in calendar (i.e. dark out?)
-Weather data in JSON format:  http://reg.bom.gov.au/catalogue/data-feeds.shtml#obs-ind
-Marine: http://reg.bom.gov.au/marine/
-Data: http://reg.bom.gov.au/catalogue/data-feeds.shtml
+draw river current on map using https://github.com/onaci/leaflet-velocity
+create a similar page for Coomera and for Noosa
+Paddling tips and resources, safety guidelines, tips
+Blog or news updates (ie. Cheese dates, AGM dates, etc)
+Training plans, ie. Intervals
+Member profiles
+Photo upload section
+Strava leaderboards standings, links
+Reviews of equipment and skis
+
 
 References:
 - https://ckc.clubexpress.com/#top
@@ -13,7 +19,7 @@ References:
 -->
 
 <?php
-    //convert format 19/08/2023 22:00
+    //convert format 19/08/2023 22:00 to a PHP timestamp
     function str_to_timestamp($dateString) {
         $dateParts = explode(' ', $dateString);
         $date = $dateParts[0];
@@ -30,42 +36,13 @@ References:
     $metar = file('http://tgftp.nws.noaa.gov/data/observations/metar/stations/YBBN.TXT')[1];
     preg_match('/(\d{3})(\d{2})(G\d{2})?KT/', $metar, $matches);
     $windDirNow = $matches[1];
-    $windSpeedNow = $matches[2];
+    $windSpeedNow = intval($matches[2]);
     preg_match('/(\d{2})\/(\d{2}|M\d{2})/', $metar, $matches);
-    $temp = $matches[1];
+    $temp = intval($matches[1]);
     
-    //get forecast winds
-    $taf = file('https://tgftp.nws.noaa.gov/data/forecasts/taf/stations/YBBN.TXT', FILE_IGNORE_NEW_LINES);
-    $tafArray = array();
-    $r = 1;
-    // Extract wind info from the second line
-    while (!preg_match('/(\d{3})(\d{2})(G\d{2})?KT/', $taf[$r], $matches) AND $r<3) { $r += 1; }
-    $tafArray[] = array(
-        'timestamp' => time(),
-        'wind_direction' => $matches[1],
-        'wind_speed' => $matches[2]
-    );
-    // Extract wind info from the remaining "FM" lines
-    foreach ($taf as $line) {
-        $line = trim($line);
-        if (strpos($line, 'FM') !== 0) { continue; }
-        if (preg_match('/FM(\d{6}) (\d{3})(\d{2})(G\d{2})?KT/', $line, $matches)) {
-            $day = intval(substr($matches[1], 0, 2));
-            $hour = intval(substr($matches[1], 2, 2));
-            $minute = intval(substr($matches[1], 4, 2));
-            $currentYear = date('Y');
-            $currentMonth = date('m');
-            if ($day < date('d')) { $currentMonth += 1; }
-            $timestamp = strtotime("$currentYear-$currentMonth-$day $hour:$minute:00 UTC");
-            $tafArray[] = array(
-                'timestamp' => $timestamp,
-                'wind_direction' => $matches[2],
-                'wind_speed' => $matches[3]
-            );
-        }
-    }
-    $json_winds = json_encode($tafArray);
-    
+    //Get forecast of min temperature, wind data next seven days 
+    $forecast = file('https://api.open-meteo.com/v1/forecast?latitude=-27.4679&longitude=153.0281&hourly=temperature_2m,windspeed_10m,winddirection_10m&timezone=auto');
+
     //Get Brisbane River Heights at St-Lucia
     $url = "http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.tbl.shtml";
     $options = array(
@@ -172,8 +149,8 @@ References:
             <th><a href='index.php#home' style='color:yellow;'>Home</a> </th>
             <th><a href='index.php#tides' style='color:yellow;'>Tides</a> </th>
             <th><a href='index.php#calendarsection' style='color:yellow;'>Calendar</a> </th>
-            <th><a href='cheese.html' style='color:yellow;'>Cheese</a> </th>
-            <th><a href='AGM.html' style='color:yellow;'>AGM</a></th>
+            <th><a href='cheese.php#cheese' style='color:yellow;'>Cheese</a> </th>
+            <th><a href='AGM.html#AGM' style='color:yellow;'>AGM</a></th>
             <th><a href='index.php#map' style='color:yellow;'>Map</a> </th>
             <th><a href='index.php#contact' style='color:yellow;'>Contact</a> </th>
         </tr></thead></table>
@@ -194,6 +171,9 @@ References:
             <img src="photos/IMG-20230817-WA0023.jpg">
             <img src="photos/IMG-20230817-WA0024.jpg">
             <img src="photos/IMG-20230817-WA0026.jpg">
+            <img src="photos/IMG-20230817-WA0034.jpg">
+            <img src="photos/IMG-20230817-WA0035.jpg">
+            <img src="photos/IMG-20230817-WA0036.jpg">
         </div></div>
 
         
@@ -209,7 +189,7 @@ References:
             <div id='canvasScroll' style='width:100%;height:250px;overflow-x:scroll;overflow-y:hidden;'>
                 <canvas id='myCanvas' width='3600' height='240'></canvas>
             </div>
-            <p style='font-size:7;'>Sources are <a href='http://www.bom.gov.au/australia/tides/#!/qld-brisbane-port-office'>BOM Tides</a> and <a href='http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.tbl.shtml'>BOM River Heights</a>
+            <p style='font-size:7;'>Sources are <a href='http://www.bom.gov.au/australia/tides/#!/qld-brisbane-port-office'>BOM Tide Predictions</a> and <a href='http://www.bom.gov.au/fwo/IDQ65389/IDQ65389.540683.tbl.shtml'>Actual River Heights in St-Lucia</a>
         </section>
         <hr>
         <section id='calendarsection'>
@@ -232,6 +212,14 @@ References:
                   </tbody>
                 </table>
             </div>
+            <br>
+            <table class='calendar'><tr>
+                <td class='today'>Today</td>
+                <td class='daypaddle'>Light paddle</td>
+                <td class='dawnpaddle'>Dawn paddle</td>
+                <td class='nightpaddle'>Dark paddle</td>
+                <td class='goodday'>Good tide</td>
+            </tr></table>
         </section>
         <hr>
         <h2>Map</h2>
@@ -251,21 +239,18 @@ References:
         <hr>
         <section id='contact'>
             <h2>Contact Us</h2>
-
-  <form action='process_form.php' method='post'>
-    <label for='name'>Name:</label>
-    <input type='text' id='name' name='name' required><br>
-    <label for='email'>Email Address:</label>
-    <input type='email' id='email' name='email' required><br>
-    <label for='phone'>Phone Number:</label>
-    <input type='tel' id='phone' name='phone' required><br>
-    <label for='message'>Message:</label><br>
-    <textarea id='message' name='message' rows='4' cols='40' required></textarea><br>
-    <input type='submit' value='Submit'>
-  </form>
-
+              <form action='process_form.php' method='post'>
+                <label for='name'>Name:</label>
+                <input type='text' id='name' name='name' required><br>
+                <label for='email'>Email Address:</label>
+                <input type='email' id='email' name='email' required><br>
+                <label for='phone'>Phone Number:</label>
+                <input type='tel' id='phone' name='phone' required><br>
+                <label for='message'>Message:</label><br>
+                <textarea id='message' name='message' rows='4' cols='40' required></textarea><br>
+                <input type='submit' value='Submit'>
+              </form>
         </section>
-
     </main>
 
     <footer>
@@ -273,8 +258,8 @@ References:
             <th><a href='index.php#home' style='color:yellow;'>Home</a> </th>
             <th><a href='index.php#tides' style='color:yellow;'>Tides</a> </th>
             <th><a href='index.php#calendarsection' style='color:yellow;'>Calendar</a> </th>
-            <th><a href='cheese.html' style='color:yellow;'>Cheese</a> </th>
-            <th><a href='AGM.html' style='color:yellow;'>AGM</a></th>
+            <th><a href='cheese.php#cheese' style='color:yellow;'>Cheese</a> </th>
+            <th><a href='AGM.html#AGM' style='color:yellow;'>AGM</a></th>
             <th><a href='index.php#map' style='color:yellow;'>Map</a> </th>
             <th><a href='index.php#contact' style='color:yellow;'>Contact</a> </th>
         </tr></thead></table>
@@ -282,210 +267,23 @@ References:
     </footer>
 
 
-    <script src='tide_list.js'></script>
-    <script src='events.js'></script>
-    <script src='calendar.js'></script>
-    <!-- <script src='tides.php'></script> -->
+    <script>
+        <?php
+            print_r("var forecastRaw = '".$forecast[0]."';");
+            echo "const windDirNow = ".$windDirNow.";";
+            echo "const windSpeedNow = ".$windSpeedNow.";";
+            echo "const tempNow = '".$temp."ºC';";
+            echo 'var riverData = '.$json_river.';';
+        ?>
+        if (!tempNow) { tempNow = 'N/A'; }
+        const forecast = JSON.parse(forecastRaw);
+    </script>
+    <script src='tide_list.js?v=1'></script>
+    <script src='events.js?v=1'></script>
+    <script src='calendar.js?v=1'></script>
+    <script src='tides.js?v=1'></script>
+    <script src='data.js?v=1'></script>
+    <script src='map.js?v=1'></script>
 
-<script>
-
-function nextTide() {
-    <?php 
-        echo 'var windsData = '.$json_winds.';';
-    ?>
-    function getWinds(t) {
-        var i,j;
-        for (i=0; i<windsData.length-1; i++) {
-            if (t < windsData[i+1].timestamp) {
-                return windsData[i].wind_direction + 'º ' + windsData[i].wind_speed + 'kts';
-            }
-        }
-        i = windsData.length-1;
-        return windsData[i].wind_direction + 'º ' + windsData[i].wind_speed + 'kts';
-    }
-    let nextTide = document.getElementById('nextTide');
-    const day = 24*3600*1000;
-    const currentDate = new Date();
-    const now = currentDate.getTime();
-    
-    // get next5am timestamp
-    let nextTime = new Date(now);
-    nextTime.setHours(5,0,0,0);   
-    let next5am = nextTime.getTime();
-    if (next5am <= now) {
-        next5am += day;
-    }
-
-    const brisbane = [-27.4698, 153.0251]; // Latitude and Longitude of Brisbane
-    var times = SunCalc.getTimes(currentDate, ...brisbane);
-    const sunrise1 = times.sunrise;
-    const sunriseFormat1 = sunrise1.toLocaleTimeString('en-US', { timeZone: 'Australia/Brisbane', hour: 'numeric', minute: 'numeric' });
-    times = SunCalc.getTimes(new Date(next5am + day), ...brisbane);
-    const sunrise2 = times.sunrise;
-    const sunriseFormat2 = sunrise2.toLocaleTimeString('en-US', { timeZone: 'Australia/Brisbane', hour: 'numeric', minute: 'numeric' });
-
-    nextTide.innerHTML = '<table><tr> \
-          <th>Date</th> \
-          <th>Tide</th> \
-          <th>Wind</th> \
-          <th>Temp</th> \
-          <th>Sunrise</th> \
-        </tr><tr> \
-          <td>Now</td> \
-          <td>' + tideText(now) + '</td> \
-          <td><?php echo $windDirNow."º ".$windSpeedNow."kts"; ?></td> \
-          <td><?php echo $temp."ºC"; ?></td> \
-          <td></td> \
-        </tr><tr> \
-          <td>' + formatDay(next5am) + '</td> \
-          <td>' + tideText(next5am) + '</td> \
-          <td>' + getWinds(next5am) + '</td> \
-          <td></td> \
-          <td>' + sunriseFormat1 + '</td> \
-        </tr><tr> \
-          <td>' + formatDay(next5am + day) + '</td> \
-          <td>' + tideText(next5am + day) + '</td> \
-          <td>' + getWinds(next5am + day) + '</td> \
-          <td></td> \
-          <td>' + sunriseFormat2 + '</td> \
-      </tr></table>';
-}
-
-function drawCurve() {
-    <?php 
-        echo 'var riverData = '.$json_river.';';
-    ?>
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');
-    const amp = 80; // amplitude
-    const xx = canvas.width;
-    const yy = canvas.height;
-
-    const day = 24*3600*1000;
-    const currentDate = new Date();
-    const now = currentDate.getTime();
-    const timeStart = now - 7*day;  //1 week ago
-    const days = 20;
-    const duration = days*day;
-    const timeEnd = timeStart + duration;
-
-    // get next midnight & noon & 5am
-    let nextTime = new Date(timeStart);
-    nextTime.setHours(0, 0, 0, 0);
-    const midnight = nextTime.getTime() + day;
-    nextTime = new Date(timeStart);
-    nextTime.setHours(12,0,0,0);
-    let noon = nextTime.getTime();
-    if (noon <= timeStart) {
-        noon += day;
-    }
-    nextTime = new Date(timeStart);
-    nextTime.setHours(5,0,0,0);   
-    let next5am = nextTime.getTime();
-    if (next5am <= timeStart) {
-        next5am += day;
-    }
-
-    ctx.clearRect(0, 0, xx, yy);
-
-    // draw horizontal lines 
-    ctx.beginPath();
-    ctx.strokeStyle = 'grey';
-    ctx.lineWidth = 1;
-    ctx.rect(0, yy - 3*amp, xx, 2*amp);
-    ctx.rect(0, yy - 2*amp, xx, 2*amp);
-    ctx.stroke();
-
-    // draw text
-    ctx.font = "18px Arial";
-    ctx.fillStyle = 'gray';
-    ctx.fillText("3 m", 5, yy - 3*amp +18);
-    ctx.fillText("2 m", 5, yy - 2*amp +18);
-    ctx.fillText("1 m", 5, yy - amp +18);
-    ctx.font = "12px Arial";
-    ctx.fillStyle = 'red';
-    ctx.fillText("Now", (now - timeStart)*xx/duration - 12, yy/5);
-
-    for (var i=0; i<days; i++) {
-        // draw midnight vertical lines
-        ctx.beginPath();
-        ctx.strokeStyle = "blue";
-        ctx.lineWidth = 2;
-        ctx.moveTo((midnight + i*day - timeStart)*xx/duration, yy - 3*amp);  //replace
-        ctx.lineTo((midnight + i*day - timeStart)*xx/duration, yy);
-        ctx.stroke();
-    
-        // draw noon vertical lines
-        ctx.beginPath();
-        ctx.strokeStyle = "blue";
-        ctx.lineWidth = 0.5;
-        ctx.moveTo((noon + i*day - timeStart)*xx/duration, yy - 3*amp);  //replace
-        ctx.lineTo((noon + i*day - timeStart)*xx/duration, yy);
-        ctx.stroke();
-    
-        // draw 5am boxes
-        ctx.fillStyle = "#E0E0C0";
-        ctx.fillRect((next5am + i*day - timeStart)*xx/duration, yy - 3*amp, 1*3600*1000*xx/duration, 3*amp);
-
-        // text
-        ctx.font = "12px Arial";
-        ctx.fillStyle = 'brown';
-        ctx.fillText("5-6am", (next5am + i*day - timeStart)*xx/duration - 13, 15);
-        ctx.fillStyle = 'blue';
-        ctx.fillText("00:00", (midnight + i*day - timeStart)*xx/duration - 15, 15);
-        ctx.fillText("12:00", (noon + i*day - timeStart)*xx/duration - 15, 15);
-
-        ctx.font = "18px Arial";
-        var nextDate = formatDay(noon + i*day);
-        ctx.fillText(nextDate, (noon + i*day - timeStart)*xx/duration - 40, yy - 10);
-    }
-    
-    // draw predicted tides, 15 min intervals 
-    ctx.beginPath();
-    for (let x = timeStart; x < timeEnd; x += 0.25*3600*1000) {
-      const y = tideHeight(x);
-      ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
-    }
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // draw historical tides, 15 min intervals 
-    ctx.beginPath();
-    let x = timeStart;
-    let r = 0;
-    while (r < riverData.length) {
-        x = riverData[r][0]*1000;
-        y = parseFloat(riverData[r][1]) + 1;
-        ctx.lineTo((x - timeStart)*xx/duration, yy - y*amp);
-        r++;
-    }
-    ctx.strokeStyle = 'blue';
-    ctx.setLineDash([1,1]);
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    // draw now line
-    ctx.beginPath();
-    ctx.moveTo((now - timeStart)*xx/duration, yy);
-    ctx.lineTo((now - timeStart)*xx/duration, yy - 3*amp);
-    ctx.strokeStyle = "red";
-    ctx.setLineDash([]);
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    
-    //adjust scrollbar
-    document.getElementById('canvasScroll').scrollLeft = 3600 * 6.75 / 20;
-}
-
-nextTide();
-drawCurve();
-
-</script>
-
-    <script src='data.js'></script>
-    <script src='map.js'></script>
-
-    
 </body>
 </html>

@@ -12,6 +12,55 @@ function plotMap(data) {
     return;
 }
 
+//const windDirNow = 280;
+//const windSpeedNow = 7;
+
+function getRandomLatLng() {
+    const bounds = map.getBounds();
+    const southWest = bounds.getSouthWest();
+    const northEast = bounds.getNorthEast();
+
+    const randomLat = Math.random() * (northEast.lat - southWest.lat) + southWest.lat;
+    const randomLng = Math.random() * (northEast.lng - southWest.lng) + southWest.lng;
+
+    return [randomLat, randomLng];
+}
+
+function animateLine(line) {
+    let step = 0;
+    const deltaX = -0.00001 * windSpeedNow * Math.sin(windDirNow * Math.PI / 180);
+    const deltaY = -0.00001 * windSpeedNow * Math.cos(windDirNow * Math.PI / 180);
+
+    const interval = setInterval(() => {
+      if (step >= 30) { // Increase the number of steps for smoother movement
+        clearInterval(interval);
+        map.removeLayer(line);
+      } else {
+        const newCoords = [
+          [line._latlngs[0].lat + deltaY, line._latlngs[0].lng + deltaX],
+          [line._latlngs[1].lat + deltaY, line._latlngs[1].lng + deltaX],
+        ];
+        line.setLatLngs(newCoords);
+        step++;
+      }
+    }, 100); // Increase the interval duration
+}
+
+function createLines(count) {
+    for (let i = 0; i < count; i++) {
+      const startCoords = getRandomLatLng();
+      const endCoords = [
+        startCoords[0] - 0.00002 * windSpeedNow * Math.cos(windDirNow * Math.PI / 180),
+        startCoords[1] - 0.00002 * windSpeedNow * Math.sin(windDirNow * Math.PI / 180)
+      ];
+      const line = L.polyline([startCoords, endCoords], { 
+          color: 'gray', 
+          weight: 1
+      }).addTo(map);
+      animateLine(line);
+    }
+}
+
 // Initialize the map centered on Brisbane
 var map = L.map('map').setView([ -27.488299, 152.996411], 14);
 
@@ -32,3 +81,7 @@ m[4] = L.marker([-26.387749, 153.089658]).addTo(map);
 m[4].bindPopup("<b><a href='https://hastingsnoosa.com.au/'>The Hastings</a></b>");
 
 plotMap(data);
+
+setInterval(() => {
+    createLines(70);
+}, 300); // Adjust the interval duration as needed
