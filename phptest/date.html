@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Popup Example</title>
+</head>
+<body>
+    <pre id="date"></pre>
+    <script>
+
+
+
+
+let nextTime = new Date();
+
+// Adjust to Brisbane timezone (UTC+10)
+nextTime.setUTCHours(2, 0, 0, 0); // Brisbane is 10 hours ahead of UTC
+
+
+document.getElementById("date").innerHTML = nextTime;
+
+
+    </script>
+</body>
+</html>
