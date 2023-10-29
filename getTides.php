@@ -1,14 +1,25 @@
 <?php
 
     // Get the tides from the BOM website for the entire year, and put them into JSON format, so that they're available for the Spearers website
-    // Just adjust the dates in the two urls and execute.  Cut and paste the result into the tide_list.js file.  
-    // Remember to replace all of the single quotes with double  ' --> "
-    
-    
+    // Just execute with location in "loc" attribute (i.e. loc=westend, breakfast, noosa, coomera).  It will refresh the tides_loc.js file.  
+
+    //what location for tides
+    $loc = $_GET["loc"];
+
     //Get Brisbane Tides for this year
     $lastWeek = date('Y-m-d', strtotime('-14 days'));
-    $url = 'http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date='.$lastWeek.'&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367';
-
+    if ($loc == 'westend' || $loc == 'breakfast') {
+        $urlroot = 'http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date=';
+    } else if ($loc == 'noosa') {
+        $urlroot = 'http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP021&type=tide&date=';
+    } else if ($loc == 'coomera') {
+        $urlroot = 'http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP146&type=tide&date=';
+    } else {
+        echo "include a location in the attributes.  I.e. getTides.php?loc=westend or breakfast, noosa, coomera";
+        die();
+    }
+    $url = $urlroot.$lastWeek.'&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367';
+    
     $options = array(
       'http'=>array(
         'method'=>"GET",
@@ -57,7 +68,8 @@
     $today = new DateTime();
     $firstDayNextYear = new DateTime((int)$today->format('Y') + 1 . '-01-01');
     $nextYear = $firstDayNextYear->format('Y-m-d');
-    $url = 'http://www.bom.gov.au/australia/tides/print.php?aac=QLD_TP138&type=tide&date='.$nextYear.'&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367';
+    $url = $urlroot.$nextYear.'&region=QLD&tz=Australia/Brisbane&tz_js=AEST&days=367';
+
 
     $response = file_get_contents($url, false, $context);
     if ($response === false) {
@@ -92,8 +104,13 @@
         $i += 2;
     }
 
+    $txt = "let tide_list = " . json_encode($tide_info_list) . ';';
 
-    // Print the array of td contents and attributes
-    echo "let tide_list = " . json_encode($tide_info_list) . ';';
+    // Write the array of td contents and attributes to the file
+    $myfile = fopen("tides_".$loc.".js", "w") or die("Unable to open file!");
+    fwrite($myfile, $txt);
+    fclose($myfile);
+    
+    echo "tides_".$loc.".js updated";
 
 ?>

@@ -13,10 +13,25 @@ function plotMap(data) {
 }
 
 // Initialize the map centered on Brisbane
-var map = L.map('map').setView([-26.387749, 153.089658], 14);
+var map = L.map('map').setView([-26.387749, 153.089658], 15);
 
-// Add the Tile Layer (you can change the tile URL to other providers if needed)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+// Add the Tile Layers
+var streets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    'attribution':'google Streets',
+    'maxZoom':20,
+    'minZoom':0,
+    'subdomains':['mt0','mt1','mt2','mt3'],
+}).addTo(map);
+var satellite = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    'attribution':'google Satellite',
+    'maxZoom':20,
+    'minZoom':0,
+    'subdomains':['mt0','mt1','mt2','mt3'],
+});
+L.control.layers({
+    "Streets": streets,
+    "Satellite": satellite
+}).addTo(map);
 
 // Add markers 
 var m = [];

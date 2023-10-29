@@ -1,43 +1,45 @@
 // convert date & time in Brisbane timezone UTC+10
 function formatDay(t) {
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  const date = new Date(t);
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const month = months[date.getMonth()];
-  const day = date.getDate();
-
-  return `${dayOfWeek} ${day} ${month}`;
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const date = new Date(t);
+    const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Australia/Brisbane',
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+          }
+    );
+    return formatter.format(date).replace(',','');
 }
 
 function formatDate(t) {
-  const options = {
-    timeZone: 'Australia/Brisbane',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  };
-  const dateParts = new Date(t).toLocaleDateString('en-US', options).split('/');
-  const formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`;
-  return formattedDate;
+    const options = {
+        timeZone: 'Australia/Brisbane',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    };
+    const dateParts = new Date(t).toLocaleDateString('en-US', options).split('/');
+    const formattedDate = `${dateParts[2]}-${dateParts[0].padStart(2, '0')}-${dateParts[1].padStart(2, '0')}`;
+    return formattedDate;
 }
 function formatTime(t) {
-  const options = {
-    timeZone: 'Australia/Brisbane',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false, // Set to 24-hour
-  };  
-  const formattedTime = new Date(t).toLocaleString('en-US', options);
-  return formattedTime;
+    const options = {
+        timeZone: 'Australia/Brisbane',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false, // Set to 24-hour
+    };  
+    const formattedTime = new Date(t).toLocaleString('en-US', options);
+    return formattedTime;
 }
 
 // determine tide at a given timestamp - incoming/outoing
 function tideText(t) {
-    let t0 = tideHeight(t - 0.75*3600*1000);  //at 4:15
-    let t1 = tideHeight(t + 0.5*3600*1000);   //at 5:30
-    let t2 = tideHeight(t + 1.75*3600*1000);  //at 6:45
+    let t0 = tideHeight(t - 0.75*3600*1000);  //at t-45mins i.e. 4:15am
+    let t1 = tideHeight(t + 0.5*3600*1000);   //at t+30mins i.e. 5:30am
+    let t2 = tideHeight(t + 1.75*3600*1000);  //at t+75mins i.e. 6:45am
     let text = t1.toFixed(1) + ' m ';
 
     if (t1 > t0) {
@@ -53,7 +55,7 @@ function tideText(t) {
 // Adjust tides for river current and add timestamp
 function adjustTides() {
     var tideTime;
-    var adjust = 0.0; //This is how much we should adjust the time in hours
+    var adjust = 0.0; //This is how much we should adjust the time in hours for river current
     for (var i=0; i < tide_list.length; i++) {
         tideTime = Date.parse(tide_list[i].time_local);
         if (tide_list[i].tide === 'HIGH') { tideTime -= adjust*3600*1000; }
@@ -81,8 +83,8 @@ function tideHeight(t) {
 function generateCalendar() {
     const tableBody = document.querySelector("#calendar tbody");
     let currentDate = new Date();
-    currentDate.setHours(5,0,0,0);
-    const today5am = currentDate.getTime();  //5am in timestamp
+    currentDate.setUTCHours(19,0,0,0); //5am in Brisbane
+    const today5am = currentDate.getTime() - 24*3600*1000;  //5am in timestamp
     currentDate.setDate(currentDate.getDate() - currentDate.getDay());  //set to the last Sunday
     
     // Get today's date in "YYYY-MM-DD"
@@ -107,8 +109,8 @@ function generateCalendar() {
             if (tide.includes('incoming')) { 
                 eventElement.classList.add('incoming');
                 // good paddle day?  If yes, make cyan
-                var height = tideHeight(currentDate.getTime() + 0.5*3600*1000);  //at 5:30
-                if (height > 1.7 && height < 2.2) {
+                var height = parseFloat(tide.substr(0,3));  //at 5:30
+                if (height >= 1.7) {
                     goodday = true;
                 }
             }
@@ -159,13 +161,9 @@ function generateCalendar() {
                 else { cell.classList.add("dawnpaddle"); }
             }
             
-    
             row.appendChild(cell);
             currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
         }
         tableBody.appendChild(row);
     }
 }
-
-adjustTides();
-generateCalendar();
